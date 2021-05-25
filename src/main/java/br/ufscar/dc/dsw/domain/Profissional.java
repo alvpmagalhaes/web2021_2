@@ -1,4 +1,4 @@
-package br.dc.ufscar.dsw.domain;
+package br.ufscar.dc.dsw.domain;
 
 import java.time.LocalDate;
 
