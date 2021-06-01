@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw.dao;
 
 import br.ufscar.dc.dsw.domain.Empresa;
 import br.ufscar.dc.dsw.domain.Vaga;
+import br.ufscar.dc.dsw.util.DataUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,14 +22,13 @@ public class VagaDAO  extends GenericDAO {
             statement.setString(1, vaga.getCargo());
             statement.setString(2, vaga.getDescricao());
             statement.setString(3, vaga.getRemuneracao());
-            //TODO format date
-            statement.setString(4, vaga.getDataLimite().toString());
+            statement.setString(4, DataUtil.convertDateToString(vaga.getDataLimite()));
             statement.setString(5, vaga.getEmpresa().getCnpj());
             statement.executeUpdate();
 
             statement.close();
             conn.close();
-        } catch (SQLException e){
+        } catch (Exception e){
             throw new RuntimeException(e);
         }
     }
