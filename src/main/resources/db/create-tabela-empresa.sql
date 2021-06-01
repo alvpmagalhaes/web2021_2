@@ -5,6 +5,7 @@ create table Empresa(
     senha varchar(256) not null,
     cidade varchar(256) not null,
     descricao varchar(256),
+    tipoLogin varchar(256),
 
     primary key (cnpj)
 );
