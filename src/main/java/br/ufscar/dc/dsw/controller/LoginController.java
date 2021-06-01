@@ -16,10 +16,16 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
-    private final LoginDAO loginDAO = new LoginDAO();
-    private final String logoutUrl = "/logout";
 
-    @Override
+    private final String logoutUrl = "/logout";
+	private LoginDAO loginDAO;
+
+	@Override
+	public void init() throws ServletException {
+		loginDAO = new LoginDAO();
+	}
+
+	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
