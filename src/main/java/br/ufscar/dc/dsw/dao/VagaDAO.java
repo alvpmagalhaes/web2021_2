@@ -101,4 +101,35 @@ public class VagaDAO  extends GenericDAO {
         }
         return vagas;
     }
+
+    public List<Vaga> getAllByCnpjEmpresa(String cnpjEmpresa) {
+        List<Vaga> vagas = new ArrayList<>();
+
+        String sql = "SELECT v.* from Vaga v WHERE v.cnpjEmpresa = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, cnpjEmpresa);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Long codigo = resultSet.getLong("codigo");
+                String cargo = resultSet.getString("cargo");
+                String descricao = resultSet.getString("descricao");
+                String remuneracao = resultSet.getString("remuneracao");
+                Date dataLimite = resultSet.getDate("dataLimite");
+                Empresa empresa = empresaDao.get(resultSet.getString("cnpjEmpresa"));
+                Vaga vaga = new Vaga(codigo,cargo,descricao,remuneracao,dataLimite,empresa);
+                vagas.add(vaga);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return vagas;
+    }
 }

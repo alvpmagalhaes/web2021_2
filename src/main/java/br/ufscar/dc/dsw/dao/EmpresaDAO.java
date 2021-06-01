@@ -134,6 +134,35 @@ public class EmpresaDAO extends GenericDAO {
         return empresa;
     }
 
+    public Empresa getByEmail(String email) {
+        Empresa empresa = null;
+
+        String sql = "SELECT * from Empresa where email = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String nome = resultSet.getString("nome");
+                String cnpj = resultSet.getString("cnpj");
+                String senha = resultSet.getString("senha");
+                String cidade = resultSet.getString("cidade");
+                String descricao = resultSet.getString("descricao");
+                empresa = new Empresa(email, senha, cnpj, nome, descricao, cidade);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return empresa;
+    }
+
     public List<Empresa> getAllCidade(String cidade) {
         List<Empresa> listaEmpresas = new ArrayList<>();
 

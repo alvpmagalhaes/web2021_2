@@ -1,9 +1,11 @@
 package br.ufscar.dc.dsw.controller;
 
 import br.ufscar.dc.dsw.dao.EmpresaDAO;
+import br.ufscar.dc.dsw.dao.VagaDAO;
 import br.ufscar.dc.dsw.domain.Empresa;
 import br.ufscar.dc.dsw.domain.Login;
 import br.ufscar.dc.dsw.domain.TipoLogin;
+import br.ufscar.dc.dsw.domain.Vaga;
 import br.ufscar.dc.dsw.util.Erro;
 
 import javax.servlet.RequestDispatcher;
@@ -22,10 +24,12 @@ public class EmpresaController extends HttpServlet implements BaseController {
 
     private static final long serialVersionUID = 1L; 
     private EmpresaDAO dao;
+    private VagaDAO vagaDAO;
 
     @Override
     public void init() {
         dao = new EmpresaDAO();
+        vagaDAO = new VagaDAO();
     }
 
     @Override
@@ -57,8 +61,8 @@ public class EmpresaController extends HttpServlet implements BaseController {
                 case "/atualizacao":
                     atualize(request, response);
                     break;
-                case "/listaCidade":
-                    listaCidade(request, response);
+                case "/vagas":
+                    getVagas(request, response);
                     break;
                 default:
                     lista(request, response);
@@ -67,6 +71,40 @@ public class EmpresaController extends HttpServlet implements BaseController {
         } catch (RuntimeException | IOException | ServletException e) {
             throw new ServletException(e);
         }
+    }
+
+    private void getVagas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
+        Erro erros = new Erro();
+        Login logado = (Login) request.getSession().getAttribute("login");
+
+        if (logado == null) {
+            erros.add("Precisa estar logado para acessar essa página.");
+            redirectErrorTo(request,response,erros,loginUrl);
+            return;
+        }
+
+        if (!logado.getTipoLogin().equals(TipoLogin.EMPRESA)) {
+            erros.add("Não possui permissão de acesso.");
+            erros.add("Apenas [EMPRESA] pode acessar essa página.");
+            redirectErrorTo(request,response,erros,noAuthUrl);
+            return;
+        }
+
+        List<Vaga> vagas = null;
+        Empresa empresa = dao.getByEmail(logado.getEmail());
+
+        try {
+            vagas = vagaDAO.getAllByCnpjEmpresa(empresa.getCnpj());
+        } catch (Exception e) {
+            erros.add("Erro nos dados preenchidos.");
+            redirectErrorTo(request,response,erros,"/vaga/lista.jsp");
+        }
+        request.setAttribute("listaVagas", vagas);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/vaga/lista.jsp");
+        dispatcher.forward(request, response);
+
     }
 
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
