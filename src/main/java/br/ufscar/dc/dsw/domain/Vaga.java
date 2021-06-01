@@ -1,26 +1,34 @@
 package br.ufscar.dc.dsw.domain;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Vaga {
-	
+
+	private Long codigo;
 	private String cargo;
 	private String descricao;
 	private String remuneracao;
-	private String dataLimite;
+	private Date dataLimite;
 
+	public Vaga() {
+	}
 
-	
-	public Vaga(String cargo, String remuneracao, String dataLimite, String descricao) {
+	public Vaga(Long codigo, String cargo, String remuneracao, Date dataLimite, String descricao) {
+		this.codigo = codigo;
 		this.setCargo(cargo);
 		this.setRemuneracao(remuneracao);
 		this.setDataLimite(dataLimite);
 		this.setDescricao(descricao);
-
-		
 	}
-	
-	
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
+
 	public String getCargo() {
 		return cargo;
 	}
@@ -34,22 +42,20 @@ public class Vaga {
 	public void setRemuneracao(String remuneracao) {
 		this.remuneracao = remuneracao;
 	}
-	
-	public String getDataLimite() {
-		return dataLimite;
-	}
-	public void setDataLimite(String dataLimite) {
-		this.dataLimite = dataLimite;
-	}
-	
+
 	public String getDescricao() {
 		return descricao;
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
 
+	public Date getDataLimite() {
+		return dataLimite;
+	}
+
+	public void setDataLimite(Date dataLimite) {
+		this.dataLimite = dataLimite;
+	}
 }
 
