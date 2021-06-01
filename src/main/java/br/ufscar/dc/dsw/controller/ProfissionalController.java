@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -58,18 +59,16 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
                 case "/atualizacao":
                     atualize(request, response);
                     break;
-                case "/listaCidade":
-                    listaCidade(request, response);
-                    break;
-                default:
-                    lista(request, response);
-                    break;
+                //default:
+                //    lista(request, response);
+                //    break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
             throw new ServletException(e);
         }
     }
 
+   /*
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Profissional> profissionais = dao.getAll();
         request.setAttribute("listaEmpresas", profissionais);
@@ -101,7 +100,7 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
         request.setAttribute("listaEmpresas", profissionais);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/profissional/listaCidade.jsp");
         dispatcher.forward(request, response);
-    }
+    }*/
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/profissional/formCadastro.jsp");
@@ -224,11 +223,12 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
         if (sexo == "") {
             sexo = profissional.getSexo();
         }
-        String dataDeNascimento = request.getParameter("dataDeNascimento");
+        LocalDate dataDeNascimento = request.getParameter("dataNascimento");
         if (dataDeNascimento == "") {
             dataDeNascimento = profissional.getDataDeNascimento();
         }
 
+        
         Profissional profissionalAtualizado = new Profissional(email, senha, cpf, nome, telefone, sexo, dataDeNascimento);
         try {
             dao.update(profissionalAtualizado);
