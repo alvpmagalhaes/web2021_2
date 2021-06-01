@@ -1,12 +1,22 @@
 package br.ufscar.dc.dsw.dao;
 
+import br.ufscar.dc.dsw.domain.Empresa;
 import br.ufscar.dc.dsw.domain.Vaga;
 import br.ufscar.dc.dsw.util.DataUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class VagaDAO  extends GenericDAO {
+
+    private EmpresaDAO empresaDao;
+
+    public VagaDAO() {
+        super();
+        empresaDao = new EmpresaDAO();
+    }
 
     public void insert(Vaga vaga){
         String sql = "INSERT INTO Vaga (cargo, descricao, remuneracao, dataLimite, cnpjEmpresa)";
@@ -29,5 +39,66 @@ public class VagaDAO  extends GenericDAO {
         } catch (Exception e){
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Vaga> getAll() {
+        List<Vaga> vagas = new ArrayList<>();
+
+        String sql = "SELECT * from Vaga";
+
+        try {
+            Connection conn = this.getConnection();
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                Long codigo = resultSet.getLong("codigo");
+                String cargo = resultSet.getString("cargo");
+                String descricao = resultSet.getString("descricao");
+                String remuneracao = resultSet.getString("remuneracao");
+                Date dataLimite = resultSet.getDate("dataLimite");
+                Empresa empresa = empresaDao.get(resultSet.getString("cnpjEmpresa"));
+                Vaga vaga = new Vaga(codigo,cargo,descricao,remuneracao,dataLimite,empresa);
+                vagas.add(vaga);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return vagas;
+    }
+
+    public List<Vaga> getAllByCidade(String cidade) {
+        List<Vaga> vagas = new ArrayList<>();
+
+        String sql = "SELECT v.* from Vaga v INNER JOIN Empresa e ON v.cnpjEmpresa = e.cnpj WHERE e.cidadade = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, cidade);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Long codigo = resultSet.getLong("codigo");
+                String cargo = resultSet.getString("cargo");
+                String descricao = resultSet.getString("descricao");
+                String remuneracao = resultSet.getString("remuneracao");
+                Date dataLimite = resultSet.getDate("dataLimite");
+                Empresa empresa = empresaDao.get(resultSet.getString("cnpjEmpresa"));
+                Vaga vaga = new Vaga(codigo,cargo,descricao,remuneracao,dataLimite,empresa);
+                vagas.add(vaga);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return vagas;
     }
 }

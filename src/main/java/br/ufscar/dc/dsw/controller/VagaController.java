@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/vagas/*")
 public class VagaController extends HttpServlet implements BaseController {
@@ -49,10 +50,33 @@ public class VagaController extends HttpServlet implements BaseController {
                 case "/insercao":
                     insere(request, response);
                     break;
+                default:
+                    lista(request, response);
+                    break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
             throw new ServletException(e);
         }
+    }
+
+    private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Vaga> vagas = null;
+        String cidade = request.getParameter("cidade");
+
+        try {
+            if (cidade == null || cidade.isEmpty()){
+                vagas = dao.getAll();
+            }else{
+                vagas = dao.getAllByCidade(cidade);
+            }
+        } catch (Exception e) {
+            Erro erros = new Erro();
+            erros.add("Erro nos dados preenchidos.");
+            redirectErrorTo(request,response,erros,"/vaga/lista.jsp");
+        }
+        request.setAttribute("listaVagas", vagas);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/vaga/lista.jsp");
+        dispatcher.forward(request, response);
     }
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
