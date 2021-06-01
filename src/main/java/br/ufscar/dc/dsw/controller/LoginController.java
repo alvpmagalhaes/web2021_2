@@ -2,6 +2,7 @@ package br.ufscar.dc.dsw.controller;
 
 import br.ufscar.dc.dsw.dao.LoginDAO;
 import br.ufscar.dc.dsw.domain.Login;
+import br.ufscar.dc.dsw.domain.TipoLogin;
 import br.ufscar.dc.dsw.util.Erro;
 
 import javax.servlet.RequestDispatcher;
@@ -13,11 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "Login", urlPatterns = "/login/*")
-public class LoginController extends HttpServlet {
+public class LoginController extends HttpServlet implements BaseController{
     
     private static final long serialVersionUID = 1L;
-
-    private final String logoutUrl = "/logout";
 	private LoginDAO loginDAO;
 
 	@Override
@@ -37,26 +36,29 @@ public class LoginController extends HttpServlet {
 		String senha = request.getParameter("senha");
 		if (email == null || email.isEmpty() || senha == null || senha.isEmpty()) {
 			erros.add("Login ou senha não informado!");
-			redirectLogout(request,response,erros);
+			redirectErrorTo(request,response,erros, logoutUrl);
+		}
+
+		if (email.equals("admin") && senha.equals("admin")){
+			Login loginAdmin = new Login(email,senha, TipoLogin.ADMIN);
+			redirectToIndex(request,response,loginAdmin);
 		}
 
 		Login login = loginDAO.getLoginByEmail(email);
 		if (login == null || !login.getSenha().equals(senha)) {
 			erros.add("Login ou senha inválida!");
-			redirectLogout(request,response,erros);
+			redirectErrorTo(request,response,erros, logoutUrl);
 		}
 
-		request.getSession().setAttribute("login", login);
-		String URL = "/index.jsp";
-		RequestDispatcher rd = request.getRequestDispatcher(URL);
-		rd.forward(request, response);
+		redirectToIndex(request,response,login);
 		return;
 
     }
 
-    private void redirectLogout(HttpServletRequest request, HttpServletResponse response, Erro erros) throws ServletException, IOException {
-		request.setAttribute("mensagens", erros);
-		RequestDispatcher rd = request.getRequestDispatcher(logoutUrl);
+	private void redirectToIndex(HttpServletRequest request, HttpServletResponse response, Login login) throws ServletException, IOException {
+		request.getSession().setAttribute("login", login);
+		String URL = "/index.jsp";
+		RequestDispatcher rd = request.getRequestDispatcher(URL);
 		rd.forward(request, response);
 	}
 }
