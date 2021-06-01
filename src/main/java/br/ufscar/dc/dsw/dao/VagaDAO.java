@@ -1,12 +1,10 @@
 package br.ufscar.dc.dsw.dao;
 
-import br.ufscar.dc.dsw.domain.Empresa;
 import br.ufscar.dc.dsw.domain.Vaga;
 import br.ufscar.dc.dsw.util.DataUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class VagaDAO  extends GenericDAO {
 
