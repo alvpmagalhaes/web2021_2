@@ -9,16 +9,34 @@ public class Vaga {
 	private String descricao;
 	private String remuneracao;
 	private Date dataLimite;
+	private Empresa empresa;
 
 	public Vaga() {
 	}
 
-	public Vaga(Long codigo, String cargo, String remuneracao, Date dataLimite, String descricao) {
+	public Vaga(Long codigo, String cargo, String descricao, String remuneracao, Date dataLimite, Empresa empresa) {
 		this.codigo = codigo;
-		this.setCargo(cargo);
-		this.setRemuneracao(remuneracao);
-		this.setDataLimite(dataLimite);
-		this.setDescricao(descricao);
+		this.cargo = cargo;
+		this.descricao = descricao;
+		this.remuneracao = remuneracao;
+		this.dataLimite = dataLimite;
+		this.empresa = empresa;
+	}
+
+	public Vaga(String cargo, String descricao, String remuneracao, Date dataLimite, Empresa empresa) {
+		this.cargo = cargo;
+		this.descricao = descricao;
+		this.remuneracao = remuneracao;
+		this.dataLimite = dataLimite;
+		this.empresa = empresa;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	public Long getCodigo() {
