@@ -7,16 +7,35 @@ public class Candidatura {
     private Profissional profissional;
     private Vaga vaga;
     private Date dataCandidatura;
-    private Boolean status;
+    private StatusCandidatura status;
+    private String arquivo;
 
     public Candidatura() {
+        this.dataCandidatura = new Date();
+        this.status = StatusCandidatura.ABERTO;
     }
 
-    public Candidatura(Profissional profissional, Vaga vaga, Date dataCandidatura, Boolean status) {
+    public Candidatura(Profissional profissional, Vaga vaga, String arquivo) {
+        this();
+        this.profissional = profissional;
+        this.vaga = vaga;
+        this.arquivo = arquivo;
+    }
+
+    public Candidatura(Profissional profissional, Vaga vaga, Date dataCandidatura, StatusCandidatura status, String arquivo) {
         this.profissional = profissional;
         this.vaga = vaga;
         this.dataCandidatura = dataCandidatura;
         this.status = status;
+        this.arquivo = arquivo;
+    }
+
+    public String getArquivo() {
+        return arquivo;
+    }
+
+    public void setArquivo(String arquivo) {
+        this.arquivo = arquivo;
     }
 
     public Profissional getProfissional() {
@@ -43,11 +62,11 @@ public class Candidatura {
         this.dataCandidatura = dataCandidatura;
     }
 
-    public Boolean getStatus() {
+    public StatusCandidatura getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(StatusCandidatura status) {
         this.status = status;
     }
 }

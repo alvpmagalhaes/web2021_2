@@ -132,4 +132,33 @@ public class VagaDAO  extends GenericDAO {
         }
         return vagas;
     }
+
+    public Vaga get(Long codigo) {
+        Vaga vaga = null;
+
+        String sql = "SELECT * from Vaga where codigo = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setLong(1, codigo);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String cargo = resultSet.getString("cargo");
+                String descricao = resultSet.getString("descricao");
+                String remuneracao = resultSet.getString("remuneracao");
+                Date dataLimite = resultSet.getDate("dataLimite");
+                Empresa empresa = empresaDao.get(resultSet.getString("cnpjEmpresa"));
+                vaga = new Vaga(codigo,cargo,descricao,remuneracao,dataLimite,empresa);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return vaga;
+    }
 }
