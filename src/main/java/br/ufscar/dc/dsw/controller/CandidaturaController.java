@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -57,10 +58,82 @@ public class CandidaturaController extends HttpServlet implements BaseController
                 case "/insercao":
                     insere(request, response);
                     break;
+                case "/recusar":
+                    recusar(request, response);
+                    break;
+                case "/aprovar":
+                    aprovar(request, response);
+                    break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
             throw new ServletException(e);
         }
+    }
+
+    private void recusar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setCharacterEncoding("UTF-8");
+
+        Erro erros = new Erro();
+        Login logado = (Login) request.getSession().getAttribute("login");
+
+        if (logado == null) {
+            erros.add("Precisa estar logado para acessar essa página.");
+            redirectErrorTo(request,response,erros,loginUrl);
+            return;
+        }
+
+        if (!logado.getTipoLogin().equals(TipoLogin.EMPRESA)) {
+            erros.add("Não possui permissão de acesso.");
+            erros.add("Apenas [EMPRESA] pode acessar essa página.");
+            redirectErrorTo(request,response,erros,noAuthUrl);
+            return;
+        }
+
+        String dataCandidatura = request.getParameter("dataCandidatura");
+        String codigoVaga = request.getParameter("codigoVaga");
+        String cpfProfissional = request.getParameter("cpfProfissional");
+
+        try {
+            dao.recusar(dataCandidatura,codigoVaga,cpfProfissional);
+        } catch (Exception e) {
+            erros.add("Erro nos dados preenchidos.");
+            redirectErrorTo(request,response,erros,"/candidatura/lista.jsp");
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/empresas/candidaturas");
+        dispatcher.forward(request, response);
+    }
+
+    private void aprovar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setCharacterEncoding("UTF-8");
+
+        Erro erros = new Erro();
+        Login logado = (Login) request.getSession().getAttribute("login");
+
+        if (logado == null) {
+            erros.add("Precisa estar logado para acessar essa página.");
+            redirectErrorTo(request,response,erros,loginUrl);
+            return;
+        }
+
+        if (!logado.getTipoLogin().equals(TipoLogin.EMPRESA)) {
+            erros.add("Não possui permissão de acesso.");
+            erros.add("Apenas [EMPRESA] pode acessar essa página.");
+            redirectErrorTo(request,response,erros,noAuthUrl);
+            return;
+        }
+
+        String dataCandidatura = request.getParameter("dataCandidatura");
+        String codigoVaga = request.getParameter("codigoVaga");
+        String cpfProfissional = request.getParameter("cpfProfissional");
+
+        try {
+            dao.aprovar(dataCandidatura,codigoVaga,cpfProfissional);
+        } catch (Exception e) {
+            erros.add("Erro nos dados preenchidos.");
+            redirectErrorTo(request,response,erros,"/candidatura/lista.jsp");
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/empresas/candidaturas");
+        dispatcher.forward(request, response);
     }
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -138,7 +211,7 @@ public class CandidaturaController extends HttpServlet implements BaseController
             redirectErrorTo(request,response,erros,"/empresa/formCadastro.jsp");
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("empresas");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/profissional/candidaturas");
         dispatcher.forward(request, response);
     }
 }
