@@ -56,15 +56,8 @@
 						<input type="text" name="sexo"/> <br/>
 						<fmt:message key="phone"/> </br>
 						<input type="text" name="telefone" placeholder="X XXXX-XXXX"/> <br/>
-						<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equals(ADMIN)}">
-							<fmt:message key="role"/> </br>
-							<select name="papel" id="papel">
-								<option value="USER">USER</option>
-								<option value="ADMIN">ADMIN</option>
-							</select> <br/>
-						</c:if>
 						<fmt:message key="birthdate"/> </br>
-						<input type="text" name="dataDeNascimento" placeholder="<fmt:message key="birthdate.ph"/>"/> <br/>
+						<input type="datetime-local" name="dataDeNascimento" /> <br/>
 						<input type="submit" name="enviar" value="<fmt:message key="register"/>" />
 					</fieldset>
 				</form>

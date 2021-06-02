@@ -20,7 +20,7 @@ public class LogoutController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().invalidate();
-        String URL = "/login.jsp";
+        String URL = "/";
         RequestDispatcher rd = request.getRequestDispatcher(URL);
         rd.forward(request, response);
     }

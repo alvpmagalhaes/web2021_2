@@ -84,7 +84,7 @@
 					<br>
 				</c:when>
 				<c:otherwise>
-					<a href="${pageContext.request.contextPath}/logout.jsp">
+					<a href="${pageContext.request.contextPath}/logout">
 						<fmt:message key="log_out"/> 
 					</a>
 					<br>
