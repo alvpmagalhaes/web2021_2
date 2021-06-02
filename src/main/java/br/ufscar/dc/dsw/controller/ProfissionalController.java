@@ -4,6 +4,7 @@ import br.ufscar.dc.dsw.dao.ProfissionalDAO;
 import br.ufscar.dc.dsw.domain.Profissional;
 import br.ufscar.dc.dsw.domain.Login;
 import br.ufscar.dc.dsw.domain.TipoLogin;
+import br.ufscar.dc.dsw.util.DataUtil;
 import br.ufscar.dc.dsw.util.Erro;
 
 import javax.servlet.RequestDispatcher;
@@ -13,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -63,7 +66,7 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
                 //    lista(request, response);
                 //    break;
             }
-        } catch (RuntimeException | IOException | ServletException e) {
+        } catch (RuntimeException | IOException | ServletException | ParseException e) {
             throw new ServletException(e);
         }
     }
@@ -107,7 +110,7 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
         dispatcher.forward(request, response);
     }
 
-    private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void insere(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
         request.setCharacterEncoding("UTF-8");
         
         String email = request.getParameter("email");
@@ -116,7 +119,7 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
         String nome = request.getParameter("nome");
         String telefone = request.getParameter("telefone");
         String sexo = request.getParameter("sexo");
-        String dataDeNascimento = request.getParameter("dataDeNascimento");
+        Date dataDeNascimento = DataUtil.convertStringToDate(request.getParameter("dataDeNascimento"));
         
 
         Profissional profissional = new Profissional(email, senha, cpf, nome, telefone, sexo, dataDeNascimento);
@@ -181,7 +184,7 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
         dispatcher.forward(request, response);
     }
 
-    private void atualize(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void atualize(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ParseException {
         Erro erros = new Erro();
         Login logado = (Login) request.getSession().getAttribute("login");
         
@@ -223,9 +226,10 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
         if (sexo == "") {
             sexo = profissional.getSexo();
         }
-        LocalDate dataDeNascimento = request.getParameter("dataNascimento");
-        if (dataDeNascimento == "") {
-            dataDeNascimento = profissional.getDataDeNascimento();
+        String dataDeNascimentoString = request.getParameter("dataNascimento");
+        Date dataDeNascimento = profissional.getDataDeNascimento();
+        if (dataDeNascimentoString != "") {
+            dataDeNascimento = DataUtil.convertStringToDate(request.getParameter("dataNascimento"));
         }
 
         

@@ -1,15 +1,17 @@
 package br.ufscar.dc.dsw.dao;
 
 import br.ufscar.dc.dsw.domain.Profissional;
+import br.ufscar.dc.dsw.util.DataUtil;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfissionalDAO extends GenericDAO {
 	
-	public void insert(Profissional profissional){
-        String sql = "INSERT INTO Profissional (cpf, nome, email, senha, telefone, sexo, tipoLogin)";
+	public void insert(Profissional profissional) throws ParseException {
+        String sql = "INSERT INTO Profissional (cpf, nome, email, senha, telefone, sexo, tipoLogin, dataNascimento)";
         sql += " VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         try{
@@ -22,8 +24,9 @@ public class ProfissionalDAO extends GenericDAO {
             statement.setString(3, profissional.getEmail());
             statement.setString(4, profissional.getSenha());
             statement.setString(5, profissional.getTelefone());
-            statement.setNCharacterStream(6, profissional.getSexo());
+            statement.setString(6, profissional.getSexo());
             statement.setString(7, profissional.getTipoLogin().name());
+            statement.setString(7, DataUtil.convertDateToString(profissional.getDataDeNascimento()));
             statement.executeUpdate();
 
             statement.close();
@@ -51,8 +54,8 @@ public class ProfissionalDAO extends GenericDAO {
                 String email = resultSet.getString("email");
                 String senha = resultSet.getString("senha");
                 String telefone = resultSet.getString("telefone");
-                char sexo = resultSet.getString("sexo");
-                String dataDeNascimento = resultSet.getString("dataNascimento");
+                String sexo = resultSet.getString("sexo");
+                Date dataDeNascimento = resultSet.getDate("dataNascimento");
                 Profissional profissional = new Profissional(email, senha, cpf, nome, telefone, sexo, dataDeNascimento);
                 listaProfissionais.add(profissional);
             }
@@ -97,12 +100,12 @@ public class ProfissionalDAO extends GenericDAO {
             statement.setString(4, profissional.getTelefone());
             statement.setString(5, profissional.getCpf());
             statement.setString(6, profissional.getSexo());
-            statement.setString(7, profissional.getDataDeNascimento());
+            statement.setString(7, DataUtil.convertDateToString(profissional.getDataDeNascimento()));
             statement.executeUpdate();
 
             statement.close();
             conn.close();
-        } catch (SQLException e){
+        } catch (SQLException | ParseException e){
             throw new RuntimeException(e);
         }
     }
@@ -124,7 +127,37 @@ public class ProfissionalDAO extends GenericDAO {
                 String senha = resultSet.getString("senha");
                 String telefone = resultSet.getString("telefone");
                 String sexo = resultSet.getString("sexo");
-                String dataNascimento = resultSet.getString("dataNascimento");
+                Date dataNascimento = resultSet.getDate("dataNascimento");
+                profissional = new Profissional(email, senha, cpf, nome, telefone, sexo, dataNascimento);
+            }
+
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return profissional;
+    }
+
+    public Profissional getByEmail(String email) {
+        Profissional profissional = null;
+
+        String sql = "SELECT * from Profissional where email = ?";
+
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String nome = resultSet.getString("nome");
+                String cpf = resultSet.getString("cpf");
+                String senha = resultSet.getString("senha");
+                String telefone = resultSet.getString("telefone");
+                String sexo = resultSet.getString("sexo");
+                Date dataNascimento = resultSet.getDate("dataNascimento");
                 profissional = new Profissional(email, senha, cpf, nome, telefone, sexo, dataNascimento);
             }
 
