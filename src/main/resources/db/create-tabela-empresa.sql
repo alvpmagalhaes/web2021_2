@@ -1,3 +1,4 @@
+use RH;
 create table Empresa(
     cnpj varchar(14) not null unique,
     nome varchar(256) not null,

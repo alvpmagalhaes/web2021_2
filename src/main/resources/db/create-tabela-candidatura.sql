@@ -1,3 +1,4 @@
+use RH;
 create table Candidatura(
     dataCandidatura datetime not null,
     cpfProfissional varchar(11) not null,

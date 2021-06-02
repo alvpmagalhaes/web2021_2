@@ -73,6 +73,7 @@ public class VagaController extends HttpServlet implements BaseController {
             Erro erros = new Erro();
             erros.add("Erro nos dados preenchidos.");
             redirectErrorTo(request,response,erros,"/vaga/lista.jsp");
+            return;
         }
         request.setAttribute("listaVagas", vagas);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/vaga/lista.jsp");
