@@ -1,3 +1,4 @@
+<%@ page import="br.ufscar.dc.dsw.domain.TipoLogin" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -11,6 +12,10 @@
 			</title>
 		</head>
 		<body>
+		teste
+		<c:set var="PROFISSIONAL" value="<%=TipoLogin.PROFISSIONAL%>"/>
+		<c:set var="EMPRESA" value="<%=TipoLogin.EMPRESA%>"/>
+		<c:set var="ADMIN" value="<%=TipoLogin.ADMIN%>"/>
 			<%
 				String contextPath = request.getContextPath().replace("/", "");
 			%>
@@ -51,7 +56,7 @@
 						<input type="text" name="sexo"/> <br/>
 						<fmt:message key="phone"/> </br>
 						<input type="text" name="telefone" placeholder="X XXXX-XXXX"/> <br/>
-						<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equal(TipoLogin.ADMIN)}">
+						<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equals(ADMIN)}">
 							<fmt:message key="role"/> </br>
 							<select name="papel" id="papel">
 								<option value="USER">USER</option>

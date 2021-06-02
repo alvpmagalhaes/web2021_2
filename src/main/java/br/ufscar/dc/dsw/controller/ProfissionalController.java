@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@WebServlet(urlPatterns = "/profissional/*")
+@WebServlet(urlPatterns = "/profissionais/*")
 
 public class ProfissionalController extends HttpServlet implements BaseController {
 	
@@ -241,7 +241,7 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
             redirectErrorTo(request,response,erros,"/profissional/formEdicao.jsp");
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("profissional");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("profissionais");
         dispatcher.forward(request, response);
     }
 

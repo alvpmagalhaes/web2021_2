@@ -23,7 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/empresas/*")
+@WebServlet(urlPatterns = "/candidaturas/*")
 public class CandidaturaController extends HttpServlet implements BaseController {
 
     private static final long serialVersionUID = 1L;

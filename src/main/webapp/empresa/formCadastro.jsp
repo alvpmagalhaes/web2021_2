@@ -31,7 +31,7 @@
 					<a href="/<%=contextPath%>">
 						<fmt:message key="main_menu"/>
 					</a>
-					<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equal(TipoLogin.ADMIN)}">
+					<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equals(TipoLogin.ADMIN)}">
 						&nbsp;&nbsp;&nbsp;
 						<a href="/<%=contextPath%>/empresa/cadastro">
 							<fmt:message key="company_new"/>

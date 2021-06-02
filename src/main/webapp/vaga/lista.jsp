@@ -52,8 +52,8 @@
 					</tr>
 					<c:forEach var="locacao" items="${requestScope.listaLocacoes}">
 						<tr>
-							<td>${vaga.professionale.cpf}</td>
-							<td>${vaga.professionale.nome}</td>
+							<td>${vaga.professional.cpf}</td>
+							<td>${vaga.professional.nome}</td>
 							<td>${vaga.empresa.cnpj}</td>
 							<td>${vaga.empresa.nome}</td>
 							<td>${vaga.dataLimite}</td>

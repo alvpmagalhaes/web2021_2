@@ -37,17 +37,20 @@ public class LoginController extends HttpServlet implements BaseController{
 		if (email == null || email.isEmpty() || senha == null || senha.isEmpty()) {
 			erros.add("Login ou senha não informado!");
 			redirectErrorTo(request,response,erros, logoutUrl);
+			return;
 		}
 
 		if (email.equals("admin") && senha.equals("admin")){
 			Login loginAdmin = new Login(email,senha, TipoLogin.ADMIN);
 			redirectToIndex(request,response,loginAdmin);
+			return;
 		}
 
 		Login login = loginDAO.getLoginByEmail(email);
 		if (login == null || !login.getSenha().equals(senha)) {
 			erros.add("Login ou senha inválida!");
 			redirectErrorTo(request,response,erros, logoutUrl);
+			return;
 		}
 
 		redirectToIndex(request,response,login);

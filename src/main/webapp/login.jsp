@@ -34,10 +34,10 @@
                 
                 <div class="login-form">
                     <label for="profissional_login">Email</label>
-                    <input type="text" name="profissional_login" value="${param.login}" placeholder="Email"/>
+                    <input type="text" name="email" value="${param.login}" placeholder="Email"/>
                     
                     <label for="cliente_password">Password</label>
-                    <input type="password" name="profissional_senha" class="password" placeholder=<fmt:message key="str_pw"/>>
+                    <input type="password" name="senha" class="password" placeholder=<fmt:message key="str_pw"/>>
                 </div>
                 
                 <input type="submit" class="submit" style="float:right" name="profissionalOK" value=<fmt:message key="str_login"/>>
