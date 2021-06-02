@@ -113,7 +113,7 @@ public class VagaController extends HttpServlet implements BaseController {
             dao.insert(vaga);
         } catch (Exception e) {
             erros.add("Erro nos dados preenchidos.");
-            redirectErrorTo(request,response,erros,"/vagas/formCadastro.jsp");
+            redirectErrorTo(request,response,erros,"/vaga/formCadastro.jsp");
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("vagas");
