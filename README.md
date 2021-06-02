@@ -3,8 +3,11 @@
 Projeto 1 
 
 ## Equipe
+
 #####***Alvaro Magalhães***
+
 #####***Jhony Ramos***
+
 #####***Pedro Apolloni***
 
 ## Documentação
