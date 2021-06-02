@@ -62,34 +62,42 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
                 case "/atualizacao":
                     atualize(request, response);
                     break;
-                //default:
-                //    lista(request, response);
-                //    break;
+                default:
+                    lista(request, response);
+                    break;
             }
         } catch (RuntimeException | IOException | ServletException | ParseException e) {
             throw new ServletException(e);
         }
     }
 
-   /*
+
     private void lista(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Profissional> profissionais = dao.getAll();
-        request.setAttribute("listaEmpresas", profissionais);
 
-        Set<String> listaCidades = new HashSet<String>();
+        Erro erros = new Erro();
+        Login logado = (Login) request.getSession().getAttribute("login");
 
-        for (int i = 0; i < profissionais.size(); i++) {
-            String cidade = profissionais.get(i).getCidade();
-            if (!listaCidades.contains(cidade)) {
-                listaCidades.add(cidade);
-            }
+        if (logado == null) {
+            erros.add("Precisa estar logado para acessar essa página.");
+            redirectErrorTo(request,response,erros,loginUrl);
+            return;
         }
-        request.setAttribute("listaCidades", listaCidades);
+
+        if (!logado.getTipoLogin().equals(TipoLogin.ADMIN)) {
+            erros.add("Não possui permissão de acesso.");
+            erros.add("Apenas [ADMIN] pode acessar essa página.");
+            redirectErrorTo(request,response,erros,noAuthUrl);
+            return;
+        }
+
+        List<Profissional> profissionais = dao.getAll();
+        request.setAttribute("listaProfissionais", profissionais);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/profissional/lista.jsp");
         dispatcher.forward(request, response);
     }
 
+    /*
     private void listaCidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Profissional> profissionais = null;
         String cidade = request.getParameter("cidade");
@@ -129,6 +137,7 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
             Erro erros = new Erro();
             erros.add("Erro nos dados preenchidos.");
             redirectErrorTo(request,response,erros,"/profissional/formCadastro.jsp");
+            return;
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("profissionais");
@@ -194,7 +203,7 @@ public class ProfissionalController extends HttpServlet implements BaseControlle
             return;
         }
 
-        if (!logado.getTipoLogin().equals("ADMIN")) {
+        if (!logado.getTipoLogin().equals(TipoLogin.ADMIN)) {
             erros.add("Não possui permissão de acesso.");
             erros.add("Apenas [ADMIN] pode acessar essa página.");
             redirectErrorTo(request,response,erros,noAuthUrl);

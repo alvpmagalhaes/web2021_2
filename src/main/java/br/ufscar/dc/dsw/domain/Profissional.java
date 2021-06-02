@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class Profissional extends Login {
 
-	private String email;
 	private String cpf;
 	private String nome;
 	private String telefone;
@@ -24,13 +23,6 @@ public class Profissional extends Login {
 		this.setTelefone(telefone);
 		this.setSexo(sexo);
 		this.setDataDeNascimento(dataDeNascimento);
-	}
-
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getCpf() {

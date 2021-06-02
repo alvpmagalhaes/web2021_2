@@ -54,11 +54,11 @@
 					<br>
 				</c:if>
 				<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equals(ADMIN)}">
-					<a href="profissional/cadastro">cadastro profissional
+					<a href="profissionais/cadastro">cadastro profissional
 						<fmt:message key="my_leases"/>
 					</a>
 					<br>
-					<a href="profissional">Profissionais
+					<a href="profissionais">Profissionais
 						<fmt:message key="my_leases"/>
 					</a>
 					<br>

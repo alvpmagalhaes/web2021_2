@@ -39,7 +39,7 @@
 				</h2>
 			</div>
 			<div>
-				<form action="/<%= contextPath%>/profissional/insercao" method="post">
+				<form action="/<%= contextPath%>/profissionais/insercao" method="post">
 					<fieldset>
 						<legend>
 							<fmt:message key="professional_registration"/>

@@ -12,7 +12,7 @@ public class ProfissionalDAO extends GenericDAO {
 	
 	public void insert(Profissional profissional) throws ParseException {
         String sql = "INSERT INTO Profissional (cpf, nome, email, senha, telefone, sexo, tipoLogin, dataNascimento)";
-        sql += " VALUES(?, ?, ?, ?, ?, ?, ?)";
+        sql += " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
         try{
             Connection conn = this.getConnection();
@@ -26,7 +26,7 @@ public class ProfissionalDAO extends GenericDAO {
             statement.setString(5, profissional.getTelefone());
             statement.setString(6, profissional.getSexo());
             statement.setString(7, profissional.getTipoLogin().name());
-            statement.setString(7, DataUtil.convertDateToString(profissional.getDataDeNascimento()));
+            statement.setString(8, DataUtil.convertDateToString(profissional.getDataDeNascimento()));
             statement.executeUpdate();
 
             statement.close();
@@ -70,7 +70,7 @@ public class ProfissionalDAO extends GenericDAO {
     }
 
     public void delete(Profissional profissional){
-        String sql = "Delete FROM Empresa where cpf = ?";
+        String sql = "Delete FROM Profissional where cpf = ?";
 
         try{
             Connection conn = this.getConnection();

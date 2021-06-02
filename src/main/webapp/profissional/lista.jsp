@@ -42,7 +42,6 @@
 						<th><fmt:message key="gender"/></th>
 						<th><fmt:message key="phone"/></th>
 		                <th><fmt:message key="birthdate"/></th>
-		                <th><fmt:message key="role"/></th>
 		                <th><fmt:message key="actions"/></th>
 					</tr>
 					<c:forEach var="profissional" items="${requestScope.listaProfissionais}">
@@ -51,18 +50,17 @@
 							<td>${profissional.nome}</td>
 							<td>${profissional.email}</td>
 							<td>${profissional.senha}</td>
-							<td>${profissional.genero}</td>
+							<td>${profissional.sexo}</td>
 		                    <td>${profissional.telefone}</td>
-		                    <td>${profissional.dataNascimento}</td>
-		                    <td>${profissional.papel}</td>
+		                    <td>${profissional.dataDeNascimento}</td>
 							<td>
-								<a href="/<%= contextPath%>/profissional/edicao?cpf=${profissional.cpf}">
+								<a href="/<%= contextPath%>/profissionais/edicao?cpf=${profissional.cpf}">
 									<fmt:message key="edition"/>
 								</a>
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								<fmt:message var="confirmation_text" key="confirmation_text"/>
 								<a
-									href="/<%= contextPath%>/profissional/remocao?cpf=${profissional.cpf}"
+									href="/<%= contextPath%>/profissionais/remocao?cpf=${profissional.cpf}"
 									onclick="return confirm(${confirmation_text});">
 									<fmt:message key="removal"/>
 								</a>

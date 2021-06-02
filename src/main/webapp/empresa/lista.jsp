@@ -1,3 +1,4 @@
+<%@ page import="br.ufscar.dc.dsw.domain.TipoLogin" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -11,6 +12,9 @@
 			</title>
 		</head>
 		<body>
+		<c:set var="PROFISSIONAL" value="<%=TipoLogin.PROFISSIONAL%>"/>
+		<c:set var="EMPRESA" value="<%=TipoLogin.EMPRESA%>"/>
+		<c:set var="ADMIN" value="<%=TipoLogin.ADMIN%>"/>
 			<%
 				String contextPath = request.getContextPath().replace("/", "");
 			%>
@@ -22,9 +26,9 @@
 					<a href="/<%=contextPath%>">
 						<fmt:message key="main_menu"/>
 					</a>
-					<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equal(TipoLogin.ADMIN)}">
+					<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equals(ADMIN)}">
 						&nbsp;&nbsp;&nbsp;
-						<a href="/<%=contextPath%>/empresa/cadastro">
+						<a href="/<%=contextPath%>/empresas/cadastro">
 							<fmt:message key="company_new"/>
 						</a>
 					</c:if>
@@ -32,10 +36,10 @@
 			</div>
 			<div align="center">
 				<p>
-				<form action="/<%= contextPath%>/empresa/listaCidade" method="get">
+				<form action="/<%= contextPath%>/empresas/lista" method="get">
 					<fmt:message key="company_show_by_city"/>: 
 					<select name="cidade">
-						<c:forEach var="cidade" items="${requestScope.listaCidades}">	
+						<c:forEach var="cidade" items="${requestScope.listaCidades}">
 							<option value ="${cidade}">${cidade}</option>
 						</c:forEach>
 					</select>
@@ -53,25 +57,25 @@
 						<th><fmt:message key="name"/></th>
 						<th><fmt:message key="email"/></th>
 						<th><fmt:message key="city"/></th>
-						<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equal(TipoLogin.ADMIN)}">
+						<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equals(ADMIN)}">
 							<th><fmt:message key="actions"/></th>
 						</c:if>
 					</tr>
-					<c:forEach var="locadora" items="${requestScope.listaEmpresas}">
+					<c:forEach var="empresa" items="${requestScope.listaEmpresas}">
 						<tr>
 							<td>${empresa.cnpj}</td>
 							<td>${empresa.nome}</td>
 							<td>${empresa.email}</td>
 							<td>${empresa.cidade}</td>
-							<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equal(TipoLogin.ADMIN)}">
+							<c:if test="${sessionScope.login != null && sessionScope.login.tipoLogin.equals(ADMIN)}">
 							<td>
-								<a href="/<%= contextPath%>/empresar/edicao?cnpj=${empresa.cnpj}">
+								<a href="/<%= contextPath%>/empresas/edicao?cnpj=${empresa.cnpj}">
 									<fmt:message key="edition"/>
 								</a>
 								&nbsp;&nbsp;&nbsp;&nbsp;
 								<fmt:message var="confirmation_text" key="confirmation_text"/>
 								<a
-									href="/<%= contextPath%>/locadoras/remocao?cnpj=${empresa.cnpj}"
+									href="/<%= contextPath%>/empresas/remocao?cnpj=${empresa.cnpj}"
 									onclick="return confirm(${confirmation_text});">
 									<fmt:message key="removal"/>
 								</a>

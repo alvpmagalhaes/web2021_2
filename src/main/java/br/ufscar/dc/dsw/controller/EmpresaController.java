@@ -102,6 +102,7 @@ public class EmpresaController extends HttpServlet implements BaseController {
         } catch (Exception e) {
             erros.add("Erro nos dados preenchidos.");
             redirectErrorTo(request,response,erros,"/candidatura/lista.jsp");
+            return;
         }
         request.setAttribute("listaCandidaturas", candidaturas);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/candidatura/lista.jsp");
@@ -136,6 +137,7 @@ public class EmpresaController extends HttpServlet implements BaseController {
         } catch (Exception e) {
             erros.add("Erro nos dados preenchidos.");
             redirectErrorTo(request,response,erros,"/vaga/lista.jsp");
+            return;
         }
         request.setAttribute("listaVagas", vagas);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/vaga/lista.jsp");
@@ -170,6 +172,7 @@ public class EmpresaController extends HttpServlet implements BaseController {
             Erro erros = new Erro();
             erros.add("Erro nos dados preenchidos.");
             redirectErrorTo(request,response,erros,"/empresa/lista.jsp");
+            return;
         }
         request.setAttribute("listaEmpresas", empresas);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/empresa/listaCidade.jsp");
@@ -197,6 +200,7 @@ public class EmpresaController extends HttpServlet implements BaseController {
             Erro erros = new Erro();
             erros.add("Erro nos dados preenchidos.");
             redirectErrorTo(request,response,erros,"/empresa/formCadastro.jsp");
+            return;
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("empresas");
@@ -262,7 +266,7 @@ public class EmpresaController extends HttpServlet implements BaseController {
             return;
         }
 
-        if (!logado.getTipoLogin().equals("ADMIN")) {
+        if (!logado.getTipoLogin().equals(TipoLogin.ADMIN)) {
             erros.add("Não possui permissão de acesso.");
             erros.add("Apenas [ADMIN] pode acessar essa página.");
             redirectErrorTo(request,response,erros,noAuthUrl);

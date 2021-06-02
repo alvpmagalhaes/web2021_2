@@ -38,7 +38,7 @@
 				</h2>
 			</div>
 			<div>
-				<form action="/<%= contextPath%>/profissional/atualizacao" method="post">
+				<form action="/<%= contextPath%>/profissionais/atualizacao" method="post">
 					<fieldset>
 						<legend>
 							<fmt:message key="client_edition"/>
@@ -50,18 +50,13 @@
 						<fmt:message key="email"/> </br>
 						<input type="email" name="email" value="${profissional.email}"/> <br/>
 						<fmt:message key="pw"/> </br>
-						<input type="password" name="senha"/> <br/>
+						<input type="password" name="senha" value="${profissional.senha}"/> <br/>
 						<fmt:message key="gender"/> </br>
-						<input type="text" name="sexo" value="${profissional.genero}"/> <br/>
+						<input type="text" name="sexo" value="${profissional.sexo}"/> <br/>
 						<fmt:message key="phone"/> </br>
 						<input type="text" name="telefone" value="${profissional.telefone}"/> <br/>
 						<fmt:message key="birthdate"/> </br>
-						<input type="text" name="dataNascimento" value="${profissional.dataDeNascimento}"/> <br/>
-						<fmt:message key="role"/> </br>
-							<select name="papel" id="papel">
-								<option value="USER">USER</option>
-								<option value="ADMIN">ADMIN</option>
-							</select> <br/>
+						<input type="datetime-local" name="dataDeNascimento"  value="${profissional.dataDeNascimento}"/> <br/>
 						<input type="submit" name="enviar" value="<fmt:message key="update"/>" />
 					</fieldset>
 				</form>

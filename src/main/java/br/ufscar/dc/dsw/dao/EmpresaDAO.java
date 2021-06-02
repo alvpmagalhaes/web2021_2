@@ -94,8 +94,8 @@ public class EmpresaDAO extends GenericDAO {
             statement.setString(2, empresa.getEmail());
             statement.setString(3, empresa.getSenha());
             statement.setString(4, empresa.getCidade());
-            statement.setString(5, empresa.getCnpj());
-            statement.setString(6, empresa.getDescricao());
+            statement.setString(5, empresa.getDescricao());
+            statement.setString(6, empresa.getCnpj());
             statement.executeUpdate();
 
             statement.close();
