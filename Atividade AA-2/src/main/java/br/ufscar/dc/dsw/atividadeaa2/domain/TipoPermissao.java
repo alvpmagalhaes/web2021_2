@@ -1,5 +1,5 @@
 package br.ufscar.dc.dsw.atividadeaa2.domain;
 
-public enum TipoLogin {
+public enum TipoPermissao {
     PROFISSIONAL,EMPRESA,ADMIN
 }

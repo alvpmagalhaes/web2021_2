@@ -9,20 +9,6 @@ public class Profissional extends Login {
 	private String telefone;
 	private String sexo;
 	private Date dataDeNascimento;
-	
-	public Profissional(String cpf) {
-		super();
-		this.setCpf(cpf);
-	}
-	
-	public Profissional(String email, String senha, String cpf, String nome, String telefone, String sexo, Date dataDeNascimento) {
-		super(email, senha, TipoLogin.PROFISSIONAL);
-		this.setCpf(cpf);
-		this.setNome(nome);
-		this.setTelefone(telefone);
-		this.setSexo(sexo);
-		this.setDataDeNascimento(dataDeNascimento);
-	}
 
 	public String getCpf() {
 		return cpf;
