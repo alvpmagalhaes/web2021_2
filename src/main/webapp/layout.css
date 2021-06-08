@@ -1,0 +1,116 @@
+* { box-sizing: border-box }
+html, body {
+  display: table;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #eee;
+}
+body {
+  display: table-cell;
+  vertical-align: middle;
+}
+.box {
+  margin: auto;
+  padding: 25px 50px;
+  width: 350px;
+  min-height: 115px;
+  background: #fff;
+  border-left: 5px solid rgb(40, 137, 216);
+  box-shadow: 0 0 20px rgba(0,0,0,.15);
+  font: 12px/15px Arial, Helvetica, sans-serif;
+  color: #666;
+}
+h2 {
+  margin: 0 10px;
+  line-height: 40px;
+}
+form {
+  padding: 0 10px 10px;
+}
+form::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+label {
+  position: absolute;
+  left: -9999px;
+}
+input {
+  position: relative;
+  z-index: 10;
+  margin: 0;
+  padding: 0 5px;
+  width: 225px;
+  height: 30px;
+  border: 1px solid #ccc;
+}
+input:focus {
+  z-index: 15;
+  box-shadow: 0 0 10px rgba(0,0,0,.1);
+  outline: 0;
+}
+.password {
+  top:-1px;
+  margin-bottom: 5px;
+}
+.register-form {
+  display: none;
+}
+.register-form input {
+  margin: -1px 0;
+}
+#first-name {
+  margin-top: 5px;
+}
+.captcha {
+  margin: 10px 0;
+}
+.captcha label {
+  position: relative;
+  left: 0;
+}
+.submit {
+  padding: 0;
+  width: 75px;
+  background: rgb(224, 224, 224);
+  color: rgb(126, 126, 126);
+  border-color: rgb(202, 202, 202);
+}
+.submit:hover {
+  color: rgb(233, 233, 233);
+  background: rgb(66, 66, 66);
+  border-color: rgb(66, 66, 66);
+}
+.submit ~ a {
+  display: block;
+  float: left;
+  width: 120px;
+  text-decoration: none;
+  color: #666;
+}
+.submit ~ a:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  position: relative;
+  background:rgb(40, 137, 216);
+  color: #eee;
+  height: 30px;
+  min-width: 90px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px 5px 0 0;
+  transition: 0.5s;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline:none;
+}
+
+.btn.active{
+  background:  rgb(255, 77, 70);
+}
