@@ -2,11 +2,11 @@ package br.ufscar.dc.dsw.atividadeaa2.service.spec;
 
 import java.util.List;
 
-import br.ufscar.dc.dsw.domain.Empresa;
+import br.ufscar.dc.dsw.atividadeaa2.domain.Profissional;
 
 public interface IProfissionalService {
 
-	Usuario buscarPorId(Long id);
+	Profissional buscarPorId(Long id);
 
 	List<Profissional> buscarTodos();
 

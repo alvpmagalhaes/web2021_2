@@ -1,4 +1,4 @@
-package br.ufscar.dc.dsw.domain;
+package br.ufscar.dc.dsw.atividadeaa2.domain;
 
 import java.io.Serializable;
 import javax.persistence.GeneratedValue;
@@ -6,7 +6,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-@SuppressWarnings("serial")
 @MappedSuperclass
 public abstract class AbstractEntity<ID extends Serializable> implements Serializable {
 	

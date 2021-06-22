@@ -25,7 +25,7 @@ public class ProfissionalService implements IProfissionalService {
 
 	@Transactional(readOnly = true)
 	public Profissional buscarPorId(Long id) {
-		return dao.findById(id.longValue());
+		return dao.getById(id.longValue());
 	}
 
 	@Transactional(readOnly = true)

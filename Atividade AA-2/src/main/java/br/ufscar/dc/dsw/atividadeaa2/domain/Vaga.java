@@ -1,35 +1,42 @@
 package br.ufscar.dc.dsw.atividadeaa2.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
-public class Vaga {
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "Vaga")
+public class Vaga extends AbstractEntity<Long>  {
 
-	private Long codigo;
+	@NotBlank
+	@Size(min = 3, max = 60)
+	@Column(nullable = false, unique = false, length = 60)
 	private String cargo;
+
+	@NotBlank
+	@Size(min = 3, max = 255)
+	@Column(nullable = false, unique = false, length = 255)
 	private String descricao;
+
+	@NotBlank
+	@Column(nullable = false, unique = false)
 	private String remuneracao;
+
+	@NotBlank
+	@Column(nullable = false, unique = false)
+	@DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
 	private Date dataLimite;
+
+	@ManyToOne
+	@JoinColumn(name = "empresa_id")
 	private Empresa empresa;
-
-	public Vaga() {
-	}
-
-	public Vaga(Long codigo, String cargo, String descricao, String remuneracao, Date dataLimite, Empresa empresa) {
-		this.codigo = codigo;
-		this.cargo = cargo;
-		this.descricao = descricao;
-		this.remuneracao = remuneracao;
-		this.dataLimite = dataLimite;
-		this.empresa = empresa;
-	}
-
-	public Vaga(String cargo, String descricao, String remuneracao, Date dataLimite, Empresa empresa) {
-		this.cargo = cargo;
-		this.descricao = descricao;
-		this.remuneracao = remuneracao;
-		this.dataLimite = dataLimite;
-		this.empresa = empresa;
-	}
 
 	public Empresa getEmpresa() {
 		return empresa;
@@ -37,14 +44,6 @@ public class Vaga {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
-	}
-
-	public Long getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
 	}
 
 	public String getCargo() {

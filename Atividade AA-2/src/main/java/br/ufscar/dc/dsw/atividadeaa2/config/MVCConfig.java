@@ -13,11 +13,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-import br.ufscar.dc.dsw.atividadeaa2.conversor.BigDecimalConversor;
-
 @Configuration
 @ComponentScan(basePackages = "br.ufscar.dc.dsw.atividadeaa2.config")
-public class MvcConfig implements WebMvcConfigurer {
+public class MVCConfig implements WebMvcConfigurer {
 
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/").setViewName("redirect:/home");
@@ -27,7 +25,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
 	@Bean
 	public LocaleResolver localeResolver() {
-		SessionLocaleResolver slr = new SessionLocaleResolver();s
+		SessionLocaleResolver slr = new SessionLocaleResolver();
 		slr.setDefaultLocale(new Locale("pt", "BR"));
 		return slr;
 	}
@@ -44,8 +42,8 @@ public class MvcConfig implements WebMvcConfigurer {
 		registry.addInterceptor(localeChangeInterceptor());
 	}
 	
-	@Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(new BigDecimalConversor());
-    }
+//	@Override
+//    public void addFormatters(FormatterRegistry registry) {
+//        registry.addConverter(new BigDecimalConversor());
+//    }
 }

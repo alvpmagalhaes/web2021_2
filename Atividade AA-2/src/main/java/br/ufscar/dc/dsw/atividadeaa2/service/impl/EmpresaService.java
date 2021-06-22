@@ -25,7 +25,7 @@ public class EmpresaService implements IEmpresaService {
 
 	@Transactional(readOnly = true)
 	public Empresa buscarPorId(Long id) {
-		return dao.findById(id.longValue());
+		return dao.getById(id.longValue());
 	}
 
 	@Transactional(readOnly = true)

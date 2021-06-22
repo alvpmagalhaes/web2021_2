@@ -1,5 +1,6 @@
 package br.ufscar.dc.dsw.atividadeaa2.config;
 
+import br.ufscar.dc.dsw.atividadeaa2.security.LoginDetailsServiceImpl;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.dao.*;
 import org.springframework.security.config.annotation.authentication.builders.*;
@@ -8,15 +9,13 @@ import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import br.ufscar.dc.dsw.atividadeaa2.security.UsuarioDetailsServiceImpl;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return new UsuarioDetailsServiceImpl();
+		return new LoginDetailsServiceImpl();
 	}
 
 	@Bean
@@ -43,9 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				http.authorizeRequests()
 				.antMatchers("/error", "/login/**", "/js/**").permitAll()
                 .antMatchers("/css/**", "/image/**", "/webjars/**").permitAll()
-				.antMatchers("/compras/**").hasRole("USER")
-				.antMatchers("/editoras/**", "/livros/**").hasRole("ADMIN")
-                .antMatchers("/usuarios/**").hasRole("ADMIN")
+						.antMatchers("/profissionais/listar","/profissionais/cadastrar","/empresas/cadastrar").hasRole("ADMIN")
 				.anyRequest().authenticated()
 			.and()
 				.formLogin()
