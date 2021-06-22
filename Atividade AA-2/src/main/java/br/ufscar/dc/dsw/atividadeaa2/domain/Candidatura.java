@@ -1,40 +1,46 @@
 package br.ufscar.dc.dsw.atividadeaa2.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
-public class Candidatura {
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "Candidatura")
+public class Candidatura extends AbstractEntity<Long> {
 
+    @ManyToOne
+    @JoinColumn(name = "profissional_id")
     private Profissional profissional;
+
+    @ManyToOne
+    @JoinColumn(name = "vaga_id")
     private Vaga vaga;
+
+    @NotBlank
+    @Column(nullable = false, unique = false)
+    @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
     private Date dataCandidatura;
+
+    @NotBlank
+    @Column(nullable = false, unique = false)
+    @Enumerated(EnumType.STRING)
     private StatusCandidatura status;
-    private String arquivo;
 
-    public Candidatura() {
-        this.dataCandidatura = new Date();
-        this.status = StatusCandidatura.ABERTO;
-    }
+    @Lob
+    @Column(columnDefinition="BLOB")
+    private byte[] arquivo;
 
-    public Candidatura(Profissional profissional, Vaga vaga, String arquivo) {
-        this();
-        this.profissional = profissional;
-        this.vaga = vaga;
-        this.arquivo = arquivo;
-    }
-
-    public Candidatura(Profissional profissional, Vaga vaga, Date dataCandidatura, StatusCandidatura status, String arquivo) {
-        this.profissional = profissional;
-        this.vaga = vaga;
-        this.dataCandidatura = dataCandidatura;
-        this.status = status;
-        this.arquivo = arquivo;
-    }
-
-    public String getArquivo() {
+    public byte[] getArquivo() {
         return arquivo;
     }
 
-    public void setArquivo(String arquivo) {
+    public void setArquivo(byte[] arquivo) {
         this.arquivo = arquivo;
     }
 
