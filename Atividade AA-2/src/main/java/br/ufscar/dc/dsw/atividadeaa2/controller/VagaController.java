@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -123,7 +124,9 @@ public class VagaController {
 
 	@GetMapping("/candidatar/{id}")
 	public String candidatar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("vaga", vagaService.buscarPorId(id));
+		List<Vaga> vagas = vagaService.buscarAllPorId(id);
+		model.addAttribute("vagas", vagas);
+		model.addAttribute("candidatura", new Candidatura());
 		return "candidatura/cadastro";
 	}
 }

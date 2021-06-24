@@ -11,10 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "Vaga")
 public class Vaga extends AbstractEntity<Long>  {
@@ -37,7 +34,7 @@ public class Vaga extends AbstractEntity<Long>  {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataLimite;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "empresa_id")
 	private Empresa empresa;
 
@@ -79,6 +76,9 @@ public class Vaga extends AbstractEntity<Long>  {
 
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}
+
+	public Vaga() {
 	}
 }
 

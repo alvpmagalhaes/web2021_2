@@ -1,10 +1,7 @@
 package br.ufscar.dc.dsw.atividadeaa2.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
@@ -17,9 +14,8 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "Profissional")
 public class Profissional extends Login {
 
@@ -48,5 +44,19 @@ public class Profissional extends Login {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private Date dataDeNascimento;
 
+	public Profissional(Login login) {
+		this.setId(login.getId());
+	}
+
+	public Profissional() {
+	}
+
+	public Profissional(@NotBlank @Size(min = 14, max = 14) String cpf, @NotBlank @Size(min = 3, max = 60) String nome, @NotBlank @Size(min = 11, max = 15) String telefone, @NotBlank @Size(min = 1, max = 60) String sexo, @NotNull Date dataDeNascimento) {
+		this.cpf = cpf;
+		this.nome = nome;
+		this.telefone = telefone;
+		this.sexo = sexo;
+		this.dataDeNascimento = dataDeNascimento;
+	}
 }
 

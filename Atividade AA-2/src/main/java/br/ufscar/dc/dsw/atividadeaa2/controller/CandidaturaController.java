@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -42,7 +43,6 @@ public class CandidaturaController {
 	
 	@GetMapping("/cadastrar")
 	public String cadastrar(Candidatura candidatura, ModelMap model) {
-		model.addAttribute("vagas", vagaService.buscarTodos());
 		return "candidatura/cadastro";
 	}
 
@@ -52,11 +52,11 @@ public class CandidaturaController {
 		List<Candidatura> candidaturas = new ArrayList<>();
 
 		if (TipoPermissao.ROLE_PROFISSIONAL.toString().equals(login.getRole())){
-			candidaturas = candidaturaService.buscarPorProfissional((Profissional) login);
+			candidaturas = candidaturaService.buscarPorProfissional(new Profissional(login));
 		}
 
 		if (TipoPermissao.ROLE_EMPRESA.toString().equals(login.getRole())){
-			candidaturas = candidaturaService.buscarPorEmpresa((Empresa) login);
+			candidaturas = candidaturaService.buscarPorEmpresa(new Empresa(login));
 		}
 
 		if (TipoPermissao.ROLE_ADMIN.toString().equals(login.getRole())){
@@ -70,21 +70,23 @@ public class CandidaturaController {
 	@PostMapping("/salvar")
 	public String salvar(@Valid Candidatura candidatura, BindingResult result, RedirectAttributes attr, ModelMap model) {
 		if (result.hasErrors()) {
-			model.addAttribute("vagas", vagaService.buscarTodos());
 			return "candidatura/cadastro";
 		}
+
+		Profissional profissional = new Profissional();
+		profissional.setId(getLoginAutenticado().getId());
 		
-		candidatura.setProfissional((Profissional) getLoginAutenticado());
+		candidatura.setProfissional(profissional);
 		candidatura.setStatus(StatusCandidatura.ABERTO);
+		candidatura.setDataCandidatura(new Date());
 		candidaturaService.salvar(candidatura);
 		
 		attr.addFlashAttribute("sucess", "Candidatura inserida com sucesso.");
-		return "redirect:/cadidaturas/listar";
+		return "redirect:/candidaturas/listar";
 	}
 
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("vagas", vagaService.buscarTodos());
 		model.addAttribute("candidatura", candidaturaService.buscarPorId(id));
 		return "candidatura/cadastro";
 	}
@@ -96,7 +98,7 @@ public class CandidaturaController {
 			return "candidatura/cadastro";
 		}
 		
-		candidatura.setProfissional((Profissional) getLoginAutenticado());
+		candidatura.setProfissional(new Profissional(getLoginAutenticado()));
 		candidaturaService.salvar(candidatura);
 		
 		attr.addFlashAttribute("sucess", "Candidatura inserida com sucesso.");
