@@ -27,25 +27,6 @@
 
 			<div th:replace="fragments/alert"></div>
 
-			<div>
-				<p th:text="#{button.filter.city}"></p> 
-				
-				<form th:action="@{/empresas/listar}" method="get">
-					<div class="input-group">
-						<select name="c" class="custom-select" id="c">
-							<option value="" th:text="#{filter.all}"></option>
-							<span th:each="cidade : ${cidades}">
-								<option th:value="${cidade}" th:text="${cidade}"></option>
-							</span>
-						</select>
-						<div class="input-group-append">
-						  <button class="btn btn-outline-secondary" type="submit" th:text="#{button.filter.label}"></button>
-						</div>
-					  </div>
-				</form>
-				</br>
-			</div>
-
 			<div class="table-responsive">
 				<table class="table table-striped table-hover table-sm">
 					<thead>
