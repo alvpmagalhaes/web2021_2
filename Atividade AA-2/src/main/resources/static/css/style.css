@@ -42,7 +42,7 @@ body {
     border-right: 1px solid #eee;    
     background-color: #f8f9fa;
     flex-shrink: 0;
-    overflow: hidden;
+    overflow-y: scroll;
     transition: width .5s;
 }
 
