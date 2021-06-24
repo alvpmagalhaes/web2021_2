@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.atividadeaa2.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -9,8 +10,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
+@Builder
 @Entity
 @Table(name = "Empresa")
 public class Empresa extends Login {
@@ -62,7 +63,19 @@ public class Empresa extends Login {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
-	
 
+	public Empresa(Login login) {
+		setId(login.getId());
+	}
+
+	public Empresa() {
+	}
+
+	public Empresa(@NotBlank @Size(min = 18, max = 18, message = "{Size.empresa.CNPJ}") String cnpj, @NotBlank @Size(min = 3, max = 60) String nome, @Size(max = 255) String descricao, @NotBlank @Size(min = 3, max = 60) String cidade) {
+		this.cnpj = cnpj;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.cidade = cidade;
+	}
 }
 

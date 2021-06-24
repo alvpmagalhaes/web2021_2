@@ -44,6 +44,11 @@ public class CandidaturaService implements ICandidaturaService {
 		return dao.findAllByVaga(vaga);
 	}
 
+	@Override
+	public List<Candidatura> buscarPorEmpresa(Empresa empresa) {
+		return dao.findAllByVagaEmpresa(empresa);
+	}
+
 	@Transactional(readOnly = true)
 	public List<Candidatura> buscarPorProfissional(Profissional profissional) {
 		return dao.findAllByProfissional(profissional);

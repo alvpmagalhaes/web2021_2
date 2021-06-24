@@ -25,14 +25,13 @@ public class VagaService implements IVagaService {
 		dao.deleteById(id);
 	}
 
-	@Transactional(readOnly = true)
 	public Vaga buscarPorId(Long id) {
 		return dao.getById(id.longValue());
 	}
 
 	@Transactional(readOnly = true)
-	public List<Vaga> buscarTodos() {
-		return dao.findAll();
+	public List<Vaga> buscarTodos(String c) {
+		return dao.findAllByEmpresaCidade(c);
 	}
 
 	@Transactional(readOnly = true)
@@ -40,4 +39,13 @@ public class VagaService implements IVagaService {
 		return dao.findAllByEmpresa(empresa);
 	}
 
+	@Override
+	public List<Vaga> buscarTodos() {
+		return dao.findAll();
+	}
+
+	@Override
+	public List<Vaga> buscarAllPorId(Long id) {
+		return dao.getAllById(id);
+	}
 }
