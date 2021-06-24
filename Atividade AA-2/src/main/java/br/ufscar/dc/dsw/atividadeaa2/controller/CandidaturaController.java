@@ -87,7 +87,10 @@ public class CandidaturaController {
 
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("candidatura", candidaturaService.buscarPorId(id));
+		Candidatura candidatura = candidaturaService.buscarPorId(id);
+		List<Vaga> vagas = vagaService.buscarAllPorId(candidatura.getVaga().getId());
+		model.addAttribute("vagas", vagas);
+		model.addAttribute("candidatura", candidatura);
 		return "candidatura/cadastro";
 	}
 
@@ -108,6 +111,22 @@ public class CandidaturaController {
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
 		candidaturaService.excluir(id);
+		return "redirect:/candidaturas/listar";
+	}
+
+	@GetMapping("/aprovar/{id}")
+	public String aprovar(@PathVariable("id") Long id, RedirectAttributes attr) {
+		Candidatura candidatura = candidaturaService.buscarPorId(id);
+		candidatura.setStatus(StatusCandidatura.ENTREVISTA);
+		candidaturaService.salvar(candidatura);
+		return "redirect:/candidaturas/listar";
+	}
+
+	@GetMapping("/rejeitar/{id}")
+	public String rejeitar(@PathVariable("id") Long id, RedirectAttributes attr) {
+		Candidatura candidatura = candidaturaService.buscarPorId(id);
+		candidatura.setStatus(StatusCandidatura.NAO_SELECIONADO);
+		candidaturaService.salvar(candidatura);
 		return "redirect:/candidaturas/listar";
 	}
 }

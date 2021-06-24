@@ -14,10 +14,6 @@
 						<span th:text="#{candidatura.list.label}"></span>
 					</li>
 				</ul>
-				<a class="btn btn-primary btn-md" th:href="@{/candidaturas/cadastrar}" role="button"> 
-					<span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span> 
-					<span th:text="#{candidatura.registro.label}"></span>
-				</a>
 			</div>
 		</nav>
 
@@ -30,23 +26,24 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th th:text="#{candidatura.locadora.label}"></th>
-							<th th:text="#{candidatura.dia.label}"></th>
-							<th th:text="#{candidatura.hora.label}"></th>
+							<th th:text="#{candidatura.profissional.label}"></th>
+							<th th:text="#{candidatura.cargo.label}"></th>
+							<th th:text="#{candidatura.empresa.label}"></th>
+							<th th:text="#{candidatura.data.label}"></th>
+							<th th:text="#{candidatura.status.label}"></th>
 							<th th:text="#{acao.label}"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr th:each="candidatura : ${candidaturas}">
 							<td th:text="${candidatura.id}"></td>
-							<td th:text="${candidatura.locadora.nome}"></td>
-							<td th:text="${candidatura.dataReserva}"></td>
-							<td th:text="${candidatura.horaReserva}"></td>
+							<td th:text="${candidatura.profissional.nome}"></td>
+							<td th:text="${candidatura.vaga.cargo}"></td>
+							<td th:text="${candidatura.vaga.empresa.nome}"></td>
+							<td th:text="${candidatura.dataCandidatura}"></td>
+							<td th:text="${candidatura.status}"></td>
+							<div sec:authorize="hasRole('ROLE_PROFISSIONAL')">
 							<td colspan="2">
-								<a class="btn btn-info btn-sm" th:href="@{/candidaturas/editar/{id} (id=${candidatura.id}) }"
-									role="button"> 
-									<span class="oi oi-brush" title="Editar" aria-hidden="true"> </span>
-								</a>
 								<button
 									th:id="${'btn_candidaturas/excluir/' + candidatura.id}"
 									type="button" class="btn btn-danger btn-sm"
@@ -54,6 +51,19 @@
 									<span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
 								</button>
 							</td>
+							</div>
+							<div sec:authorize="hasRole('ROLE_EMPRESA')">
+								<td colspan="2">
+									<a class="btn btn-success btn-sm" th:href="@{/candidaturas/aprovar/{id} (id=${candidatura.id}) }"
+									   role="button">
+										<span class="oi oi-check" title="Aprovar" aria-hidden="true"> </span>
+									</a>
+									<a class="btn btn-danger btn-sm" th:href="@{/candidaturas/rejeitar/{id} (id=${candidatura.id}) }"
+									   role="button">
+										<span class="oi oi-x" title="Rejeitar" aria-hidden="true"> </span>
+									</a>
+								</td>
+							</div>
 						</tr>
 					</tbody>
 				</table>
