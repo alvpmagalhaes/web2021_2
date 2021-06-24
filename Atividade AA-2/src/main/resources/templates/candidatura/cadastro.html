@@ -11,12 +11,12 @@
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
 						<i class="oi oi-caret-right"></i>
-						<span th:text="#{locacao.cadastrar.label}"></span>
+						<span th:text="#{candidatura.cadastrar.label}"></span>
 					</li>
 				</ul>
-				<a class="btn btn-primary btn-md" th:href="@{/locacoes/listar}"
+				<a class="btn btn-primary btn-md" th:href="@{/candidatura/listar}"
 					role="button"> <span class="oi oi-spreadsheet" title="Listar"
-					aria-hidden="true"></span> <span th:text="#{locacao.listar.label}"></span>
+					aria-hidden="true"></span> <span th:text="#{candidatura.listar.label}"></span>
 				</a>
 			</div>
 		</nav>
@@ -26,31 +26,31 @@
 			<div th:replace="fragments/alert"></div>
 
 			<form
-				th:action="${locacao.id == null} ? @{/locacoes/salvar} : @{/locacoes/editar}"
-				th:object="${locacao}" method="POST">
+				th:action="${candidatura.id == null} ? @{/candidatura/salvar} : @{/candidatura/editar}"
+				th:object="${candidatura}" method="POST">
 				
 				<div class="form-row">
 						
 					<div class="form-group col-md-6">
-						<label for="locadora" th:text="#{locacao.locadora.label}"></label> 
-						<select name="locadora" id="locadora" class="form-control"
+						<label for="vaga" th:text="#{candidatura.vaga.label}"></label> 
+						<select name="vaga" id="empresa" class="form-control"
 							autofocus="autofocus" th:classappend="${#fields.hasErrors('locadora')} ? is-invalid">
-							<option th:each="locadora : ${locadoras}"
-								th:value="${locadora.id}"  th:field="*{dataReserva}">
-								<th th:text="${locadora.CNPJ + ', ' + locadora.nome + ', ' + locadora.cidade}"></th>
+							<option th:each="vaga : ${vaga_id}"
+								th:value="${vaga.id}"  th:field="*{dataCandidatura}">
+								<th th:text="${candidatura.profissional_id + ', ' + candidatura.vaga_id + ', '}"></th>
 							</option>
 						</select>
 
 						<div class="invalid-feedback">
-							<span th:errors="*{locadora}"></span>
+							<span th:errors="*{vaga}"></span>
 						</div>
 					</div>
 
 					<div class="form-group col-md-6">
-						<label for="dataReserva" th:text="#{locacao.dia.label}"></label> 
-						<input type="date" th:value="*{dataReserva}" th:field="*{dataReserva}"
-							name="dataReserva" id="dataReserva" class="form-control"
-							autofocus="autofocus" th:classappend="${#fields.hasErrors('dataReserva')} ? is-invalid">
+						<label for="dataCandidatura" th:text="#{candidatura.data.label}"></label> 
+						<input type="date" th:value="*{dataCandidatura}" th:field="*{dataCandidatura}"
+							name="dataReserva" id="dataCandidatura" class="form-control"
+							autofocus="autofocus" th:classappend="${#fields.hasErrors('dataCandidatura')} ? is-invalid">
 						                               
 						<div class="invalid-feedback">
 							<span th:errors="*{dataReserva}"></span>
@@ -58,10 +58,10 @@
 					</div>
 					
 					<div class="form-group col-md-6">
-						<label for="horaReserva" th:text="#{locacao.hora.label}"></label> 
-						<select name="horaReserva" id="horaReserva" th:field="*{horaReserva}"
+						<label for="dataCandidatura" th:text="#{candidatura.dataa.label}"></label> 
+						<select name="dataCandidatura" id="dataCandidatura" th:field="*{dataCandidatura}"
 							class="form-control" autofocus="autofocus"
-							th:classappend="${#fields.hasErrors('horaReserva')} ? is-invalid">
+							th:classappend="${#fields.hasErrors('dataCandidatura')} ? is-invalid">
 							<option th:value="0">00:00 - 01:00</option>
 							<option th:value="1">01:00 - 02:00</option>
 							<option th:value="2">02:00 - 03:00</option>
