@@ -10,11 +10,11 @@
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active"><i class="oi oi-caret-right"></i>
-						<span th:text="#{locadora.cadastrar.label}"></span></li>
+						<span th:text="#{empresa.cadastrar.label}"></span></li>
 				</ul>
-				<a class="btn btn-primary btn-md" th:href="@{/locadoras/listar}"
+				<a class="btn btn-primary btn-md" th:href="@{/empresas/listar}"
 					role="button"> <span class="oi oi-spreadsheet" title="Listar"
-					aria-hidden="true"></span> <span th:text="#{locadora.listar.label}"></span>
+					aria-hidden="true"></span> <span th:text="#{empresa.listar.label}"></span>
 				</a>
 			</div>
 		</nav>
@@ -24,12 +24,12 @@
 			<div th:replace="fragments/alert"></div>
 
 			<form
-				th:action="${locadora.id == null} ? @{/locadoras/salvar} : @{/locadoras/editar}"
-				th:object="${locadora}" method="POST">
+				th:action="${empresa.id == null} ? @{/empresas/salvar} : @{/empresas/editar}"
+				th:object="${empresa}" method="POST">
 				
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="nome" th:text="#{locadora.nome.label}"></label> 
+						<label for="nome" th:text="#{empresa.nome.label}"></label> 
 						<input type="text" class="form-control" id="nome"
 							autofocus="autofocus" th:field="*{nome}"
 							th:classappend="${#fields.hasErrors('nome')} ? is-invalid" />
@@ -40,19 +40,19 @@
 					</div>
 
 					<div class="form-group col-md-6">
-						<label for="CNPJ" th:text="#{locadora.cnpj.label}">CNPJ</label> 
-						<input type="text" class="form-control" id="CNPJ" placeholder="__.___.___/____-__"
-							autofocus="autofocus" th:field="*{CNPJ}"
-							th:classappend="${#fields.hasErrors('CNPJ')} ? is-invalid" 
+						<label for="cnpj" th:text="#{empresa.cnpj.label}">cnpj</label> 
+						<input type="text" class="form-control" id="cnpj" placeholder="__.___.___/____-__"
+							autofocus="autofocus" th:field="*{cnpj}"
+							th:classappend="${#fields.hasErrors('cnpj')} ? is-invalid" 
 							data-mask="00.000.000/0000-00" data-mask-reverse="true" />
 						                               
 						<div class="invalid-feedback">
-							<span th:errors="*{CNPJ}"></span>
+							<span th:errors="*{cnpj}"></span>
 						</div>
 					</div>
 
 					<div class="form-group col-md-6">
-						<label for="username" th:text="#{locadora.email.label}">Email</label> 
+						<label for="username" th:text="#{empresa.email.label}">Email</label> 
 						<input type="email" class="form-control" id="username" placeholder="abcde@email.com"
 							autofocus="autofocus" th:field="*{username}"
 							th:classappend="${#fields.hasErrors('username')} ? is-invalid"/>
@@ -63,7 +63,7 @@
 					</div>
 
 					<div class="form-group col-md-6">
-						<label for="password" th:text="#{locadora.senha.label}">Senha</label> 
+						<label for="password" th:text="#{empresa.senha.label}">Senha</label> 
 						<input type="password" class="form-control" id="password"
 							autofocus="autofocus" th:field="*{password}"
 							th:classappend="${#fields.hasErrors('password')} ? is-invalid"/>
@@ -74,7 +74,7 @@
 					</div>
 
 					<div class="form-group col-md-6">
-						<label for="cidade" th:text="#{locadora.cidade.label}">Cidade</label> 
+						<label for="cidade" th:text="#{empresa.cidade.label}">Cidade</label> 
 						<input type="text" class="form-control" id="cidade"
 							autofocus="autofocus" th:field="*{cidade}"
 							th:classappend="${#fields.hasErrors('cidade')} ? is-invalid"/>

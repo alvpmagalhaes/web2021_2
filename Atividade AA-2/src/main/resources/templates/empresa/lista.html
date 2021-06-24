@@ -11,13 +11,13 @@
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
 						<i class="oi oi-caret-right"></i>
-						<span th:text="#{locadora.list.label}"></span>
+						<span th:text="#{empresa.list.label}"></span>
 					</li>
 				</ul>
 				<div sec:authorize="hasRole('ROLE_ADMIN')">
-				<a class="btn btn-primary btn-md" th:href="@{/locadoras/cadastrar}" role="button"> 
+				<a class="btn btn-primary btn-md" th:href="@{/empresas/cadastrar}" role="button"> 
 					<span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span> 
-					<span th:text="#{locadora.registro.label}"></span>
+					<span th:text="#{empresa.registro.label}"></span>
 				</a>
 				</div>
 			</div>
@@ -30,7 +30,7 @@
 			<div>
 				<p th:text="#{button.filter.city}"></p> 
 				
-				<form th:action="@{/locadoras/listar}" method="get">
+				<form th:action="@{/empresas/listar}" method="get">
 					<div class="input-group">
 						<select name="c" class="custom-select" id="c">
 							<option value="" th:text="#{filter.all}"></option>
@@ -51,31 +51,31 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th th:text="#{locadora.cnpj.label}"></th>
-							<th th:text="#{locadora.nome.label}"></th>
-							<th th:text="#{locadora.email.label}"></th>
-							<th th:text="#{locadora.cidade.label}"></th>
+							<th th:text="#{empresa.cnpj.label}"></th>
+							<th th:text="#{empresa.nome.label}"></th>
+							<th th:text="#{empresa.email.label}"></th>
+							<th th:text="#{empresa.cidade.label}"></th>
 							<div sec:authorize="hasRole('ROLE_ADMIN')">
 								<th th:text="#{acao.label}"></th>
 							</div>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="locadora : ${locadoras}">
-							<td th:text="${locadora.id}"></td>
-							<td th:text="${locadora.CNPJ}"></td>
-							<td th:text="${locadora.nome}"></td>
-							<td th:text="${locadora.username}"></td>
-							<td th:text="${locadora.cidade}"></td>
+						<tr th:each="empresa : ${empresas}">
+							<td th:text="${empresa.id}"></td>
+							<td th:text="${empresa.cnpj}"></td>
+							<td th:text="${empresa.nome}"></td>
+							<td th:text="${empresa.username}"></td>
+							<td th:text="${empresa.cidade}"></td>
 							<div sec:authorize="hasRole('ROLE_ADMIN')">
 
 								<td colspan="2">
-									<a class="btn btn-info btn-sm" th:href="@{/locadoras/editar/{id} (id=${locadora.id}) }"
+									<a class="btn btn-info btn-sm" th:href="@{/empresas/editar/{id} (id=${empresa.id}) }"
 									role="button"> 
 									<span class="oi oi-brush" title="Editar" aria-hidden="true"> </span>
 								</a>
 								<button
-								th:id="${'btn_locadoras/excluir/' + locadora.id}"
+								th:id="${'btn_empresas/excluir/' + empresa.id}"
 								type="button" class="btn btn-danger btn-sm"
 								data-toggle="modal" data-target="#myModal">
 								<span class="oi oi-circle-x" title="Excluir" aria-hidden="true"></span>
