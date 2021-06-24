@@ -1,6 +1,6 @@
 ## Sobre
 
-Projeto 1 
+Projeto 2 
 
 ## Equipe
 #####***Alvaro Magalhães***
@@ -20,19 +20,10 @@ The main dependencies of the project are:
 | Mysql | latest |
 | Maven | 4.0.0 |
 | JDK | 1.8 |
-|Tomcat |9  |
 
 ## Gerar Banco de dados
 
-Vá na pasta src/main/resources/db e execute os arquivos sqls na seguinte ordem:
-
-1 - create-tabela-profissional.sql
-
-2 - create-tabela-empresa.sql
-
-3 - create-tabela-vaga.sql
-
-4 - create-tabela-candidatura.sql
+Crie um banco de dados com o nome RH.
 
 Obs: Banco de dados = RH, usuario = root e sem senha
 
@@ -41,6 +32,7 @@ Obs: Banco de dados = RH, usuario = root e sem senha
 Vá para a pasta do projeto e execute o seguinte commando:
 
 ```bash
-mvn clean install tomcat7:run
+./mvnw clean install spring-boot:run
+
 ```
 

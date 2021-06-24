@@ -87,7 +87,10 @@ public class CandidaturaController {
 
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("candidatura", candidaturaService.buscarPorId(id));
+		Candidatura candidatura = candidaturaService.buscarPorId(id);
+		List<Vaga> vagas = vagaService.buscarAllPorId(candidatura.getVaga().getId());
+		model.addAttribute("vagas", vagas);
+		model.addAttribute("candidatura", candidatura);
 		return "candidatura/cadastro";
 	}
 
