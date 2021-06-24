@@ -44,7 +44,7 @@
 		</ul>
 
 		</div>
-		<div sec:authorize="hasAnyRole('ROLE_PROFISSIONAL', 'ROLE_ADMIN', 'ROLE_EMPRESA')">
+		<div sec:authorize="hasAnyRole('ROLE_PROFISSIONAL', 'ROLE_EMPRESA')">
 		<ul class="nav nav-pills">
 			<li class="nav-item"><span class="nav-link active"th:text="#{sidebar.titulo.candidatura}"></span></li>
 			<li class="nav-item"><a class="nav-link"
@@ -55,7 +55,7 @@
 		</div>
 		<ul class="nav nav-pills">
 			<li class="nav-item"><span class="nav-link active"th:text="#{sidebar.titulo.vaga}"></span></li>
-			<div sec:authorize="hasAnyRole('ROLE_EMPRESA', 'ROLE_ADMIN')">
+			<div sec:authorize="hasAnyRole('ROLE_EMPRESA')">
 				<li class="nav-item"><a class="nav-link"
 										th:href="@{/vagas/cadastrar}"> <i class="oi oi-plus"></i> <span th:text="#{sidebar.link.cadastrar}"></span>
 				</a></li>

@@ -36,3 +36,10 @@ Vá para a pasta do projeto e execute o seguinte commando:
 
 ```
 
+## Login Administrador da aplicação
+
+Usuário: admin
+
+Senha: admin
+
+

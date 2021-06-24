@@ -113,4 +113,20 @@ public class CandidaturaController {
 		candidaturaService.excluir(id);
 		return "redirect:/candidaturas/listar";
 	}
+
+	@GetMapping("/aprovar/{id}")
+	public String aprovar(@PathVariable("id") Long id, RedirectAttributes attr) {
+		Candidatura candidatura = candidaturaService.buscarPorId(id);
+		candidatura.setStatus(StatusCandidatura.ENTREVISTA);
+		candidaturaService.salvar(candidatura);
+		return "redirect:/candidaturas/listar";
+	}
+
+	@GetMapping("/rejeitar/{id}")
+	public String rejeitar(@PathVariable("id") Long id, RedirectAttributes attr) {
+		Candidatura candidatura = candidaturaService.buscarPorId(id);
+		candidatura.setStatus(StatusCandidatura.NAO_SELECIONADO);
+		candidaturaService.salvar(candidatura);
+		return "redirect:/candidaturas/listar";
+	}
 }
