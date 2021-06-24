@@ -72,7 +72,7 @@ public class ProfissionalController {
 		}
 
 		loginService.salvar(profissional);
-		attr.addFlashAttribute("success", "Profissional editadp com sucesso.");
+		attr.addFlashAttribute("success", "Profissional editado com sucesso.");
 		return "redirect:/profissionais/listar";
 	}
 
