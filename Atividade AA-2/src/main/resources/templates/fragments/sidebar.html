@@ -18,39 +18,55 @@
 
 		<div sec:authorize="hasRole('ROLE_ADMIN')">
 		<ul class="nav nav-pills">
-			<li class="nav-item"><span class="nav-link active" th:text="#{sidebar.titulo.cliente}"></span></li>
+			<li class="nav-item"><span class="nav-link active" th:text="#{sidebar.titulo.profissional}"></span></li>
+			<div sec:authorize="hasAnyRole('ROLE_ADMIN')">
 			<li class="nav-item"><a class="nav-link"
-				th:href="@{/clientes/cadastrar}"> <i class="oi oi-plus"></i> <span th:text="#{sidebar.link.cadastrar}"></span>
+				th:href="@{/profissionais/cadastrar}"> <i class="oi oi-plus"></i> <span th:text="#{sidebar.link.cadastrar}"></span>
 			</a></li>
 			<li class="nav-item"><a class="nav-link"
-				th:href="@{/clientes/listar}"> <i class="oi oi-spreadsheet"></i>
+				th:href="@{/profissionais/listar}"> <i class="oi oi-spreadsheet"></i>
 				<span th:text="#{sidebar.link.listar}"></span>
+			</a></li>
+			</div>
+		</ul>
+
+		<ul class="nav nav-pills">
+			<li class="nav-item"><span class="nav-link active" th:text="#{sidebar.titulo.empresa}"></span></li>
+			<div sec:authorize="hasRole('ROLE_ADMIN')">
+			<li class="nav-item"><a class="nav-link"
+				th:href="@{/empresas/cadastrar}"> <i class="oi oi-plus"></i> <span th:text="#{sidebar.link.cadastrar}"></span>
+			</a></li>
+			<li class="nav-item"><a class="nav-link"
+				th:href="@{/empresas/listar}"> <i class="oi oi-spreadsheet"></i>
+				<span th:text="#{sidebar.link.listar}"></span>
+			</a></li>
+			</div>
+		</ul>
+
+		</div>
+		<div sec:authorize="hasAnyRole('ROLE_PROFISSIONAL', 'ROLE_ADMIN', 'ROLE_EMPRESA')">
+		<ul class="nav nav-pills">
+			<li class="nav-item"><span class="nav-link active"th:text="#{sidebar.titulo.candidatura}"></span></li>
+
+			<li class="nav-item"><a class="nav-link"
+				th:href="@{/candidaturas/cadastrar}"> <i class="oi oi-plus"></i> <span th:text="#{sidebar.link.cadastrar}"></span>
+			</a></li>
+			<li class="nav-item"><a class="nav-link"
+				th:href="@{/candidaturas/listar}"> <i class="oi oi-spreadsheet"></i>
+					<span th:text="#{sidebar.link.listar}"></span>
 			</a></li>
 		</ul>
 		</div>
-
 		<ul class="nav nav-pills">
-			<li class="nav-item"><span class="nav-link active" th:text="#{sidebar.titulo.locadora}"></span></li>
-			<div sec:authorize="hasRole('ROLE_ADMIN')">
-			<li class="nav-item"><a class="nav-link"
-				th:href="@{/locadoras/cadastrar}"> <i class="oi oi-plus"></i> <span th:text="#{sidebar.link.cadastrar}"></span>
-			</a></li>
+			<li class="nav-item"><span class="nav-link active"th:text="#{sidebar.titulo.vaga}"></span></li>
+			<div sec:authorize="hasAnyRole('ROLE_EMPRESA', 'ROLE_ADMIN')">
+				<li class="nav-item"><a class="nav-link"
+										th:href="@{/vagas/cadastrar}"> <i class="oi oi-plus"></i> <span th:text="#{sidebar.link.cadastrar}"></span>
+				</a></li>
 			</div>
 			<li class="nav-item"><a class="nav-link"
-				th:href="@{/locadoras/listar}"> <i class="oi oi-spreadsheet"></i>
+									th:href="@{/vagas/listar}"> <i class="oi oi-spreadsheet"></i>
 				<span th:text="#{sidebar.link.listar}"></span>
-			</a></li>
-		</ul>
-		<ul class="nav nav-pills">
-			<li class="nav-item"><span class="nav-link active"th:text="#{sidebar.titulo.locacao}"></span></li>
-			<div sec:authorize="hasAnyRole('ROLE_CLIENTE', 'ROLE_ADMIN')">
-			<li class="nav-item"><a class="nav-link"
-				th:href="@{/locacoes/cadastrar}"> <i class="oi oi-plus"></i> <span th:text="#{sidebar.link.cadastrar}"></span>
-			</a></li>
-			</div>
-			<li class="nav-item"><a class="nav-link"
-				th:href="@{/locacoes/listar}"> <i class="oi oi-spreadsheet"></i>
-					<span th:text="#{sidebar.link.listar}"></span>
 			</a></li>
 		</ul>
 	</nav>
