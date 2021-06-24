@@ -1,13 +1,17 @@
 package br.ufscar.dc.dsw.atividadeaa2.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -22,12 +26,10 @@ public class Candidatura extends AbstractEntity<Long> {
     @JoinColumn(name = "vaga_id")
     private Vaga vaga;
 
-    @NotBlank
     @Column(nullable = false, unique = false)
-    @DateTimeFormat(pattern = "yyyy/MM/dd hh:mm:ss")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataCandidatura;
 
-    @NotBlank
     @Column(nullable = false, unique = false)
     @Enumerated(EnumType.STRING)
     private StatusCandidatura status;

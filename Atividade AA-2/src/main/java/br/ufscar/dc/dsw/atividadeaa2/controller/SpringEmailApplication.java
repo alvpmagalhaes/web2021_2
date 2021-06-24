@@ -1,15 +1,15 @@
-package br.ufscar.dc.dsw;
+package br.ufscar.dc.dsw.atividadeaa2;
 
 import java.io.File;
 
 import javax.mail.internet.InternetAddress;
 
+import br.ufscar.dc.dsw.atividadeaa2.service.impl.EmailService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
+
 public class SpringEmailApplication {
 
 	public static void main(String[] args) {
