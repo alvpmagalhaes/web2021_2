@@ -51,14 +51,14 @@ public class EmpresaController {
 			return "empresa/cadastro";
 		}
 		empresa.setPassword(encoder.encode(empresa.getPassword()));
-		loginService.salvar(empresa);
+		empresaService.salvar(empresa);
 		attr.addFlashAttribute("sucess", "Empresa inserida com sucesso");
 		return "redirect:/empresas/listar";
 	}
 
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("empresa", loginService.buscarPorId(id));
+		model.addAttribute("empresa", empresaService.buscarPorId(id));
 		return "empresa/cadastro";
 	}
 
@@ -72,7 +72,7 @@ public class EmpresaController {
 			return "empresa/cadastro";
 		}
 
-		loginService.salvar(empresa);
+		empresaService.salvar(empresa);
 		attr.addFlashAttribute("sucess", "Empresa editada com sucesso.");
 		return "redirect:/empresas/listar";
 	}

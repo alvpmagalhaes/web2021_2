@@ -57,7 +57,7 @@ public class ProfissionalController {
 
 	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
-		model.addAttribute("profissional", loginService.buscarPorId(id));
+		model.addAttribute("profissional", profissionalService.buscarPorId(id));
 		return "profissional/cadastro";
 	}
 
@@ -71,14 +71,14 @@ public class ProfissionalController {
 			return "profissional/cadastro";
 		}
 
-		loginService.salvar(profissional);
+		profissionalService.salvar(profissional);
 		attr.addFlashAttribute("success", "Profissional editadp com sucesso.");
 		return "redirect:/profissionais/listar";
 	}
 
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
-		
+
 			loginService.excluir(id);
 			attr.addFlashAttribute("sucess", "Empresa excluída com sucesso.");
 			return "redirect:/profissionais/listar";

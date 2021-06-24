@@ -1,11 +1,9 @@
 package br.ufscar.dc.dsw.atividadeaa2.controller;
 
-import br.ufscar.dc.dsw.atividadeaa2.domain.Candidatura;
-import br.ufscar.dc.dsw.atividadeaa2.domain.Empresa;
-import br.ufscar.dc.dsw.atividadeaa2.domain.StatusCandidatura;
-import br.ufscar.dc.dsw.atividadeaa2.domain.Vaga;
+import br.ufscar.dc.dsw.atividadeaa2.domain.*;
 import br.ufscar.dc.dsw.atividadeaa2.security.LoginDetails;
 import br.ufscar.dc.dsw.atividadeaa2.service.spec.IEmpresaService;
+import br.ufscar.dc.dsw.atividadeaa2.service.spec.ILoginService;
 import br.ufscar.dc.dsw.atividadeaa2.service.spec.IVagaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/vagas")
@@ -25,25 +25,52 @@ public class VagaController {
 	
 	@Autowired
 	private IEmpresaService empresaService;
+
+	@Autowired
+	private ILoginService loginService;
 	
 	@Autowired
 	private IVagaService vagaService;
 	
-	private Empresa getEmpresaAutenticado() {
+	private Login getEmpresaAutenticado() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		LoginDetails user = (LoginDetails) authentication.getPrincipal();
-		return empresaService.buscarPorId(user.getId());
+		try {
+			LoginDetails user = (LoginDetails) authentication.getPrincipal();
+			return loginService.buscarPorId(user.getId());
+		}catch (Exception e){
+			return null;
+		}
 	}
 	
 	@GetMapping("/cadastrar")
-	public String cadastrar(Candidatura candidatura, ModelMap model) {
+	public String cadastrar(Vaga vaga, ModelMap model) {
 		return "vaga/cadastro";
 	}
 
 	@GetMapping("/listar")
 	public String listar(@RequestParam(required = false) String c, ModelMap model) {
-		List<Vaga> vagas = vagaService.buscarPorEmpresa(getEmpresaAutenticado());
+		Login login = getEmpresaAutenticado();
 
+		List<Vaga> vagas = vagaService.buscarTodos();
+		Set<String> cidades = new HashSet<String>();
+
+		for (Vaga vaga : vagas) {
+			String cidade = vaga.getEmpresa().getCidade();
+			if (!cidades.contains(cidade)) {
+				cidades.add(cidade);
+			}
+		}
+
+		if (login != null && TipoPermissao.ROLE_EMPRESA.toString().equals(login.getRole())) {
+			Empresa empresa = new Empresa();
+			empresa.setId(login.getId());
+			vagas = vagaService.buscarPorEmpresa(empresa);
+		}else {
+			if (c != null && !c.isEmpty()) {
+				vagas = vagaService.buscarTodos(c);
+			}
+			model.addAttribute("cidades", cidades);
+		}
 		model.addAttribute("vagas", vagas);
 		return "vaga/lista";
 	}
@@ -53,8 +80,12 @@ public class VagaController {
 		if (result.hasErrors()) {
 			return "vaga/cadastro";
 		}
+
+		Login login = getEmpresaAutenticado();
+		Empresa empresa = new Empresa();
+		empresa.setId(login.getId());
 		
-		vaga.setEmpresa(getEmpresaAutenticado());
+		vaga.setEmpresa(empresa);
 		vagaService.salvar(vaga);
 		
 		attr.addFlashAttribute("sucess", "Vaga inserida com sucesso.");
@@ -72,8 +103,12 @@ public class VagaController {
 		if (result.hasErrors()) {
 			return "vaga/cadastro";
 		}
+
+		Login login = getEmpresaAutenticado();
+		Empresa empresa = new Empresa();
+		empresa.setId(login.getId());
 		
-		vaga.setEmpresa(getEmpresaAutenticado());
+		vaga.setEmpresa(empresa);
 		vagaService.salvar(vaga);
 		
 		attr.addFlashAttribute("sucess", "Vaga inserida com sucesso.");
@@ -84,5 +119,11 @@ public class VagaController {
 	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
 		vagaService.excluir(id);
 		return "redirect:/vagas/listar";
+	}
+
+	@GetMapping("/candidatar/{id}")
+	public String candidatar(@PathVariable("id") Long id, ModelMap model) {
+		model.addAttribute("vaga", vagaService.buscarPorId(id));
+		return "candidatura/cadastro";
 	}
 }
