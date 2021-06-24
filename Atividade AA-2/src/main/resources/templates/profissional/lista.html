@@ -10,13 +10,13 @@
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
 						<i class="oi oi-caret-right"></i>
-						<span th:text="#{client.list.label}"></span>
+						<span th:text="#{profissional.list.label}"></span>
 					</li>
 				</ul>
 				<div sec:authorize="hasRole('ROLE_ADMIN')">
 				<a class="btn btn-primary btn-md" th:href="@{/profissionais/cadastrar}" role="button"> 
 					<span class="oi oi-plus" title="Cadastro" aria-hidden="true"></span> 
-					<span th:text="#{client.registro.label}"></span>
+					<span th:text="#{profissional.registro.label}"></span>
 				</a>
 				</div>
 			</div>
@@ -31,14 +31,14 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th th:text="#{client.cpf.label}"></th>
-							<th th:text="#{client.nome.label}"></th>
-							<th th:text="#{client.email.label}"></th>
-							<th th:text="#{client.telefone.label}"></th>
-							<th th:text="#{client.sexo.label}"></th>
-							<th th:text="#{client.data.label}"></th>
+							<th th:text="#{profissional.cpf.label}"></th>
+							<th th:text="#{profissional.nome.label}"></th>
+							<th th:text="#{profissional.email.label}"></th>
+							<th th:text="#{profissional.telefone.label}"></th>
+							<th th:text="#{profissional.sexo.label}"></th>
+							<th th:text="#{profissional.data.label}"></th>
 							<div sec:authorize="hasRole('ROLE_ADMIN')">
-								<th th:text="#{client.papel.label}"></th>
+								<th th:text="#{profissional.papel.label}"></th>
 								<th th:text="#{acao.label}"></th>
 							</div>
 						</tr>

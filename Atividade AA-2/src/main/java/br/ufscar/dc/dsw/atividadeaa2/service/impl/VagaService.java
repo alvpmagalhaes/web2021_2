@@ -31,8 +31,8 @@ public class VagaService implements IVagaService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Vaga> buscarTodos() {
-		return dao.findAll();
+	public List<Vaga> buscarTodos(String c) {
+		return dao.findAllByEmpresaCidade(c);
 	}
 
 	@Transactional(readOnly = true)
@@ -40,4 +40,8 @@ public class VagaService implements IVagaService {
 		return dao.findAllByEmpresa(empresa);
 	}
 
+	@Override
+	public List<Vaga> buscarTodos() {
+		return dao.findAll();
+	}
 }

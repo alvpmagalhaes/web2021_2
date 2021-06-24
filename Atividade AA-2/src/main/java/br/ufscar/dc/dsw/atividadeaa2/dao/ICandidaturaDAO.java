@@ -14,4 +14,5 @@ public interface ICandidaturaDAO extends JpaRepository<Candidatura, Long> {
 
 	List<Candidatura> findAllByVaga(Vaga vaga);
 	List<Candidatura> findAllByProfissional(Profissional profissional);
+    List<Candidatura> findAllByVagaEmpresa(Empresa empresa);
 }

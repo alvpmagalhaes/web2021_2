@@ -1,10 +1,9 @@
 package br.ufscar.dc.dsw.atividadeaa2.controller;
 
-import br.ufscar.dc.dsw.atividadeaa2.domain.Candidatura;
-import br.ufscar.dc.dsw.atividadeaa2.domain.Profissional;
-import br.ufscar.dc.dsw.atividadeaa2.domain.StatusCandidatura;
+import br.ufscar.dc.dsw.atividadeaa2.domain.*;
 import br.ufscar.dc.dsw.atividadeaa2.security.LoginDetails;
 import br.ufscar.dc.dsw.atividadeaa2.service.spec.ICandidaturaService;
+import br.ufscar.dc.dsw.atividadeaa2.service.spec.ILoginService;
 import br.ufscar.dc.dsw.atividadeaa2.service.spec.IProfissionalService;
 import br.ufscar.dc.dsw.atividadeaa2.service.spec.IVagaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,14 +27,17 @@ public class CandidaturaController {
 	
 	@Autowired
 	private IProfissionalService profissionalService;
+
+	@Autowired
+	private ILoginService loginService;
 	
 	@Autowired
 	private IVagaService vagaService;
 	
-	private Profissional getClienteAutenticado() {
+	private Login getLoginAutenticado() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		LoginDetails user = (LoginDetails) authentication.getPrincipal();
-		return profissionalService.buscarPorId(user.getId());
+		return loginService.buscarPorId(user.getId());
 	}
 	
 	@GetMapping("/cadastrar")
@@ -45,7 +48,20 @@ public class CandidaturaController {
 
 	@GetMapping("/listar")
 	public String listar(@RequestParam(required = false) String c, ModelMap model) {
-		List<Candidatura> candidaturas = candidaturaService.buscarPorProfissional(getClienteAutenticado());
+		Login login = getLoginAutenticado();
+		List<Candidatura> candidaturas = new ArrayList<>();
+
+		if (TipoPermissao.ROLE_PROFISSIONAL.toString().equals(login.getRole())){
+			candidaturas = candidaturaService.buscarPorProfissional((Profissional) login);
+		}
+
+		if (TipoPermissao.ROLE_EMPRESA.toString().equals(login.getRole())){
+			candidaturas = candidaturaService.buscarPorEmpresa((Empresa) login);
+		}
+
+		if (TipoPermissao.ROLE_ADMIN.toString().equals(login.getRole())){
+			candidaturas = candidaturaService.buscarTodos();
+		}
 
 		model.addAttribute("candidaturas", candidaturas);
 		return "candidatura/lista";
@@ -58,7 +74,7 @@ public class CandidaturaController {
 			return "candidatura/cadastro";
 		}
 		
-		candidatura.setProfissional(getClienteAutenticado());
+		candidatura.setProfissional((Profissional) getLoginAutenticado());
 		candidatura.setStatus(StatusCandidatura.ABERTO);
 		candidaturaService.salvar(candidatura);
 		
@@ -80,7 +96,7 @@ public class CandidaturaController {
 			return "candidatura/cadastro";
 		}
 		
-		candidatura.setProfissional(getClienteAutenticado());
+		candidatura.setProfissional((Profissional) getLoginAutenticado());
 		candidaturaService.salvar(candidatura);
 		
 		attr.addFlashAttribute("sucess", "Candidatura inserida com sucesso.");

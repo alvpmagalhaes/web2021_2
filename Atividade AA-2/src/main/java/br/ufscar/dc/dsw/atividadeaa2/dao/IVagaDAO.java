@@ -11,4 +11,6 @@ import java.util.List;
 public interface IVagaDAO extends JpaRepository<Vaga, Long> {
 
 	List<Vaga> findAllByEmpresa(Empresa empresa);
+
+    List<Vaga> findAllByEmpresaCidade(String c);
 }

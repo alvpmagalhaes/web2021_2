@@ -9,6 +9,8 @@ public interface IVagaService {
 
 	Vaga buscarPorId(Long id);
 
+	List<Vaga> buscarTodos(String c);
+
 	List<Vaga> buscarTodos();
 
 	List<Vaga> buscarPorEmpresa(Empresa empresa);
