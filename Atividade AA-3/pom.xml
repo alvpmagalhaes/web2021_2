@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.ufscar.dc.dsw</groupId>
-	<artifactId>atividadeaa2</artifactId>
+	<artifactId>atividadeaa3</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>atividadeaa2</name>
-	<description>Atividade AA2</description>
+	<name>atividadeaa3</name>
+	<description>Atividade AA3</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
