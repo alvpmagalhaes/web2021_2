@@ -1,4 +1,4 @@
-package br.ufscar.dc.dsw.atividadeaa2.util;
+package br.ufscar.dc.dsw.atividadeaa3.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;

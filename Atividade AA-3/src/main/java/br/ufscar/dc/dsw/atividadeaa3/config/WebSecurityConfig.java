@@ -1,6 +1,6 @@
-package br.ufscar.dc.dsw.atividadeaa2.config;
+package br.ufscar.dc.dsw.atividadeaa3.config;
 
-import br.ufscar.dc.dsw.atividadeaa2.security.LoginDetailsServiceImpl;
+import br.ufscar.dc.dsw.atividadeaa3.security.LoginDetailsServiceImpl;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.dao.*;
 import org.springframework.security.config.annotation.authentication.builders.*;

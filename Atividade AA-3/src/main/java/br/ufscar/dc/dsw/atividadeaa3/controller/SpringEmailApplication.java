@@ -1,10 +1,10 @@
-package br.ufscar.dc.dsw.atividadeaa2;
+package br.ufscar.dc.dsw.atividadeaa3;
 
 import java.io.File;
 
 import javax.mail.internet.InternetAddress;
 
-import br.ufscar.dc.dsw.atividadeaa2.service.impl.EmailService;
+import br.ufscar.dc.dsw.atividadeaa3.service.impl.EmailService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;

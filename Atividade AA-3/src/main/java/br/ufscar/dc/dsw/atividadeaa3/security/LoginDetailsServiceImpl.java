@@ -1,7 +1,7 @@
-package br.ufscar.dc.dsw.atividadeaa2.security;
+package br.ufscar.dc.dsw.atividadeaa3.security;
 
-import br.ufscar.dc.dsw.atividadeaa2.dao.ILoginDAO;
-import br.ufscar.dc.dsw.atividadeaa2.domain.Login;
+import br.ufscar.dc.dsw.atividadeaa3.dao.ILoginDAO;
+import br.ufscar.dc.dsw.atividadeaa3.domain.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

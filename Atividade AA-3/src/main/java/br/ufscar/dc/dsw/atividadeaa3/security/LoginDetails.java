@@ -1,6 +1,6 @@
-package br.ufscar.dc.dsw.atividadeaa2.security;
+package br.ufscar.dc.dsw.atividadeaa3.security;
 
-import br.ufscar.dc.dsw.atividadeaa2.domain.Login;
+import br.ufscar.dc.dsw.atividadeaa3.domain.Login;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

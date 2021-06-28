@@ -1,10 +1,12 @@
-package br.ufscar.dc.dsw.atividadeaa2.service.spec;
+package br.ufscar.dc.dsw.atividadeaa3.service.spec;
 
 import java.util.List;
 
-import br.ufscar.dc.dsw.atividadeaa2.domain.Profissional;
+import br.ufscar.dc.dsw.atividadeaa3.domain.Profissional;
 
 public interface IProfissionalService {
+
+	public Profissional salvarRest(Profissional profissional);
 
 	Profissional buscarPorId(Long id);
 

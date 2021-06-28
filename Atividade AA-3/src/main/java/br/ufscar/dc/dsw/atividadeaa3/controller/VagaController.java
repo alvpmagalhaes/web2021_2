@@ -1,10 +1,10 @@
-package br.ufscar.dc.dsw.atividadeaa2.controller;
+package br.ufscar.dc.dsw.atividadeaa3.controller;
 
-import br.ufscar.dc.dsw.atividadeaa2.domain.*;
-import br.ufscar.dc.dsw.atividadeaa2.security.LoginDetails;
-import br.ufscar.dc.dsw.atividadeaa2.service.spec.IEmpresaService;
-import br.ufscar.dc.dsw.atividadeaa2.service.spec.ILoginService;
-import br.ufscar.dc.dsw.atividadeaa2.service.spec.IVagaService;
+import br.ufscar.dc.dsw.atividadeaa3.domain.*;
+import br.ufscar.dc.dsw.atividadeaa3.security.LoginDetails;
+import br.ufscar.dc.dsw.atividadeaa3.service.spec.IEmpresaService;
+import br.ufscar.dc.dsw.atividadeaa3.service.spec.ILoginService;
+import br.ufscar.dc.dsw.atividadeaa3.service.spec.IVagaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

@@ -1,9 +1,9 @@
-package br.ufscar.dc.dsw.atividadeaa2;
+package br.ufscar.dc.dsw.atividadeaa3;
 
-import br.ufscar.dc.dsw.atividadeaa2.dao.*;
-import br.ufscar.dc.dsw.atividadeaa2.domain.Empresa;
-import br.ufscar.dc.dsw.atividadeaa2.domain.Login;
-import br.ufscar.dc.dsw.atividadeaa2.domain.Profissional;
+import br.ufscar.dc.dsw.atividadeaa3.dao.*;
+import br.ufscar.dc.dsw.atividadeaa3.domain.Empresa;
+import br.ufscar.dc.dsw.atividadeaa3.domain.Login;
+import br.ufscar.dc.dsw.atividadeaa3.domain.Profissional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

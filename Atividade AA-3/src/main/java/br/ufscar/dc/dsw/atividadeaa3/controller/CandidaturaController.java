@@ -1,11 +1,11 @@
-package br.ufscar.dc.dsw.atividadeaa2.controller;
+package br.ufscar.dc.dsw.atividadeaa3.controller;
 
-import br.ufscar.dc.dsw.atividadeaa2.domain.*;
-import br.ufscar.dc.dsw.atividadeaa2.security.LoginDetails;
-import br.ufscar.dc.dsw.atividadeaa2.service.spec.ICandidaturaService;
-import br.ufscar.dc.dsw.atividadeaa2.service.spec.ILoginService;
-import br.ufscar.dc.dsw.atividadeaa2.service.spec.IProfissionalService;
-import br.ufscar.dc.dsw.atividadeaa2.service.spec.IVagaService;
+import br.ufscar.dc.dsw.atividadeaa3.domain.*;
+import br.ufscar.dc.dsw.atividadeaa3.security.LoginDetails;
+import br.ufscar.dc.dsw.atividadeaa3.service.spec.ICandidaturaService;
+import br.ufscar.dc.dsw.atividadeaa3.service.spec.ILoginService;
+import br.ufscar.dc.dsw.atividadeaa3.service.spec.IProfissionalService;
+import br.ufscar.dc.dsw.atividadeaa3.service.spec.IVagaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

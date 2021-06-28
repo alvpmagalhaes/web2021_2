@@ -1,6 +1,6 @@
-package br.ufscar.dc.dsw.atividadeaa2.dao;
+package br.ufscar.dc.dsw.atividadeaa3.dao;
 
-import br.ufscar.dc.dsw.atividadeaa2.domain.Profissional;
+import br.ufscar.dc.dsw.atividadeaa3.domain.Profissional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

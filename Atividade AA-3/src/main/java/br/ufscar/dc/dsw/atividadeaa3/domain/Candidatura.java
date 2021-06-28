@@ -1,4 +1,4 @@
-package br.ufscar.dc.dsw.atividadeaa2.domain;
+package br.ufscar.dc.dsw.atividadeaa3.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Getter

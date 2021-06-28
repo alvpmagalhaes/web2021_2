@@ -1,8 +1,8 @@
-package br.ufscar.dc.dsw.atividadeaa2.service.spec;
+package br.ufscar.dc.dsw.atividadeaa3.service.spec;
 
 import java.util.List;
 
-import br.ufscar.dc.dsw.atividadeaa2.domain.Empresa;
+import br.ufscar.dc.dsw.atividadeaa3.domain.Empresa;
 
 public interface IEmpresaService {
 

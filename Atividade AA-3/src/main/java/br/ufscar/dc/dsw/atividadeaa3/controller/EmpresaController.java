@@ -1,10 +1,9 @@
-package br.ufscar.dc.dsw.atividadeaa2.controller;
+package br.ufscar.dc.dsw.atividadeaa3.controller;
 
 import javax.validation.Valid;
 
-import br.ufscar.dc.dsw.atividadeaa2.service.spec.ILoginService;
+import br.ufscar.dc.dsw.atividadeaa3.service.spec.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -15,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import br.ufscar.dc.dsw.atividadeaa2.domain.Empresa;
-import br.ufscar.dc.dsw.atividadeaa2.service.spec.IEmpresaService;
+import br.ufscar.dc.dsw.atividadeaa3.domain.Empresa;
+import br.ufscar.dc.dsw.atividadeaa3.service.spec.IEmpresaService;
 
-import static br.ufscar.dc.dsw.atividadeaa2.domain.TipoPermissao.ROLE_EMPRESA;
+import static br.ufscar.dc.dsw.atividadeaa3.domain.TipoPermissao.ROLE_EMPRESA;
 
 @Controller
 @RequestMapping("/empresas")

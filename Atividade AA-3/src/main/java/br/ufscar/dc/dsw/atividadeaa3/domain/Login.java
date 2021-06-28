@@ -1,4 +1,4 @@
-package br.ufscar.dc.dsw.atividadeaa2.domain;
+package br.ufscar.dc.dsw.atividadeaa3.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

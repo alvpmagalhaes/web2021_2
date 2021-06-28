@@ -1,4 +1,4 @@
-package br.ufscar.dc.dsw.atividadeaa2.constant;
+package br.ufscar.dc.dsw.atividadeaa3.constant;
 
 public abstract class UniqueConstraints {
 

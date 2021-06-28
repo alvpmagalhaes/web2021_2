@@ -1,6 +1,6 @@
-package br.ufscar.dc.dsw.atividadeaa2.service.spec;
+package br.ufscar.dc.dsw.atividadeaa3.service.spec;
 
-import br.ufscar.dc.dsw.atividadeaa2.domain.Login;
+import br.ufscar.dc.dsw.atividadeaa3.domain.Login;
 
 import java.util.List;
 

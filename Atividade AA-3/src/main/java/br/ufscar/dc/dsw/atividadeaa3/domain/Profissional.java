@@ -1,6 +1,5 @@
-package br.ufscar.dc.dsw.atividadeaa2.domain;
+package br.ufscar.dc.dsw.atividadeaa3.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
