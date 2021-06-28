@@ -14,6 +14,10 @@ public class ProfissionalService implements IProfissionalService {
 
 	@Autowired
 	IProfissionalDAO dao;
+
+	public Profissional salvarRest(Profissional profissional) {
+		return dao.saveAndFlush(profissional);
+	}
 	
 	public void salvar(Profissional profissional) {
 		dao.save(profissional);

@@ -4,22 +4,24 @@ import javax.validation.Valid;
 
 import br.ufscar.dc.dsw.atividadeaa2.service.spec.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import br.ufscar.dc.dsw.atividadeaa2.domain.Profissional;
 import br.ufscar.dc.dsw.atividadeaa2.service.spec.IProfissionalService;
 
+import java.net.URI;
+import java.util.List;
+
 import static br.ufscar.dc.dsw.atividadeaa2.domain.TipoPermissao.ROLE_PROFISSIONAL;
 
-@Controller
+@RestController
 @RequestMapping("/profissionais")
 public class ProfissionalController {
 
@@ -28,6 +30,29 @@ public class ProfissionalController {
 
 	@Autowired
 	private IProfissionalService profissionalService;
+
+	/**
+	 * API REST Vagas de estágio/emprego
+	 */
+
+
+	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> salvarRest(@Valid @RequestBody Profissional profissional) {
+		if (profissional.getRole() == null) {
+			profissional.setRole(ROLE_PROFISSIONAL.toString());
+		}
+		return ResponseEntity.created(URI.create("/profissionais/"+profissionalService.salvarRest(profissional).getId())).build();
+	}
+
+
+	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Profissional>> listar() {
+		return ResponseEntity.ok(profissionalService.buscarTodos());
+	}
+
+	/**
+	 * Sistema Vagas de estágio/emprego
+	 */
 
 	@GetMapping("/cadastrar")
 	public String cadastrar(Profissional profissional) {
