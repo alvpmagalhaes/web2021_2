@@ -36,17 +36,52 @@ public class ProfissionalController {
 
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> salvarRest(@Valid @RequestBody Profissional profissional) {
-		if (profissional.getRole() == null) {
-			profissional.setRole(ROLE_PROFISSIONAL.toString());
-		}
+	public ResponseEntity<String> criar(@Valid @RequestBody Profissional profissional, BCryptPasswordEncoder encoder) {
+		profissional.setPassword(encoder.encode(profissional.getPassword()));
 		return ResponseEntity.created(URI.create("/profissionais/"+profissionalService.salvarRest(profissional).getId())).build();
 	}
-
 
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Profissional>> listar() {
 		return ResponseEntity.ok(profissionalService.buscarTodos());
+	}
+
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Profissional> buscar(@PathVariable("id") Long id) {
+		Profissional profissional = profissionalService.buscarPorId(id);
+		if (profissional == null){
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(profissional);
+	}
+
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Profissional> atualizar(@Valid @RequestBody Profissional profissional, @PathVariable("id") Long id, BCryptPasswordEncoder encoder) {
+		Profissional profissionalOriginal = profissionalService.buscarPorId(id);
+
+		if(profissionalOriginal == null){
+			return ResponseEntity.notFound().build();
+		}
+
+		profissionalOriginal.setPassword(encoder.encode(profissional.getPassword()));
+		profissionalOriginal.setCpf(profissional.getCpf());
+		profissionalOriginal.setDataDeNascimento(profissional.getDataDeNascimento());
+		profissionalOriginal.setNome(profissional.getNome());
+		profissionalOriginal.setSexo(profissional.getSexo());
+		profissionalOriginal.setTelefone(profissional.getTelefone());
+		profissional.setUsername(profissional.getUsername());
+
+		return ResponseEntity.ok(profissionalService.salvarRest(profissional));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity excluir(@PathVariable("id") Long id) {
+		Profissional profissional = profissionalService.buscarPorId(id);
+		if (profissional == null){
+			return ResponseEntity.notFound().build();
+		}
+		loginService.excluir(id);
+		return ResponseEntity.noContent().build();
 	}
 
 	/**
