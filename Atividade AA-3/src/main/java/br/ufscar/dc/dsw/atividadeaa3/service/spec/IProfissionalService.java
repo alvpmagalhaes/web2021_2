@@ -6,7 +6,7 @@ import br.ufscar.dc.dsw.atividadeaa3.domain.Profissional;
 
 public interface IProfissionalService {
 
-	public Profissional salvarRest(Profissional profissional);
+	Profissional salvarRest(Profissional profissional);
 
 	Profissional buscarPorId(Long id);
 

@@ -8,6 +8,8 @@ import br.ufscar.dc.dsw.atividadeaa3.dao.IProfissionalDAO;
 import br.ufscar.dc.dsw.atividadeaa3.domain.Profissional;
 import br.ufscar.dc.dsw.atividadeaa3.service.spec.IProfissionalService;
 
+import static br.ufscar.dc.dsw.atividadeaa3.domain.TipoPermissao.ROLE_PROFISSIONAL;
+
 @Service
 @Transactional(readOnly = false)
 public class ProfissionalService implements IProfissionalService {
@@ -16,6 +18,9 @@ public class ProfissionalService implements IProfissionalService {
 	IProfissionalDAO dao;
 
 	public Profissional salvarRest(Profissional profissional) {
+		if (profissional.getRole() == null) {
+			profissional.setRole(ROLE_PROFISSIONAL.toString());
+		}
 		return dao.saveAndFlush(profissional);
 	}
 	
