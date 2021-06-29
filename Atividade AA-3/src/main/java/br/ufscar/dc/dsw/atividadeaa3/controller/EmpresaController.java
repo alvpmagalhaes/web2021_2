@@ -36,6 +36,8 @@ public class EmpresaController {
 	 * API REST Vagas de estágio/emprego
 	 */
 	
+	
+	//salvar em rest
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> salvarRest(@Valid @RequestBody Empresa empresa) {
 		if (empresa.getRole() == null) {
@@ -43,13 +45,21 @@ public class EmpresaController {
 		}
 		return ResponseEntity.created(URI.create("/empresa/"+empresaService.salvarRest(empresa).getId())).build();
 	}
-
-
+	
+	
+	//excluir em rest
+	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> excluirRest(@PathVariable("id") Long id){ //VERIFICAR!!!!!!!!!!!!!!!!!
+		return ResponseEntity.delete(URI.create("/empresa/"+loginService.excluirRest(id).getId())).build();
+		//CONFIRMAR!!! N tenho ctz
+	}
+	
+	
+	//listar em rest
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Empresa>> listar() {
 		return ResponseEntity.ok(empresaService.buscarTodos());
 	}
-	
 	
 	/**
 	 * Sistema Vagas de estágio/emprego

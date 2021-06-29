@@ -19,6 +19,12 @@ public class EmpresaService implements IEmpresaService {
 		return dao.saveAndFlush(empresa);
 	}
 	
+
+	//deletar empresas por id por rest
+	public Empresa excluirRest(Long id) {
+		return dao.deleteByIdAndFlush(id);
+	}
+	
 	public void salvar(Empresa empresa) {
 		dao.save(empresa);
 	}

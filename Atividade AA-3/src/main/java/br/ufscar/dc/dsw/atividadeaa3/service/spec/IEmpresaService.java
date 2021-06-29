@@ -7,6 +7,8 @@ import br.ufscar.dc.dsw.atividadeaa3.domain.Empresa;
 public interface IEmpresaService {
 	
 	public Empresa salvarRest(Empresa empresa);
+	
+	public Empresa excluirRest(Long id);
 
 	Empresa buscarPorId(Long id);
 
