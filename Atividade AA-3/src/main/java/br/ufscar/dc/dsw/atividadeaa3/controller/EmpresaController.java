@@ -19,6 +19,9 @@ import br.ufscar.dc.dsw.atividadeaa3.service.spec.IEmpresaService;
 
 import static br.ufscar.dc.dsw.atividadeaa3.domain.TipoPermissao.ROLE_EMPRESA;
 
+import java.net.URI;
+import java.util.List;
+
 @Controller
 @RequestMapping("/empresas")
 public class EmpresaController {
@@ -28,6 +31,30 @@ public class EmpresaController {
 
 	@Autowired
 	private IEmpresaService empresaService;
+	
+	/**
+	 * API REST Vagas de estágio/emprego
+	 */
+	
+	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> salvarRest(@Valid @RequestBody Empresa empresa) {
+		if (empresa.getRole() == null) {
+			empresa.setRole(ROLE_EMPRESA.toString());
+		}
+		return ResponseEntity.created(URI.create("/empresa/"+empresaService.salvarRest(empresa).getId())).build();
+	}
+
+
+	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Empresa>> listar() {
+		return ResponseEntity.ok(empresaService.buscarTodos());
+	}
+	
+	
+	/**
+	 * Sistema Vagas de estágio/emprego
+	 */
+	
 
 	@GetMapping("/cadastrar")
 	public String cadastrar(Empresa empresa) {

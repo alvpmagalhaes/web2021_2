@@ -15,6 +15,10 @@ public class EmpresaService implements IEmpresaService {
 	@Autowired
 	IEmpresaDAO dao;
 	
+	public Empresa salvarRest(Empresa empresa) {
+		return dao.saveAndFlush(empresa);
+	}
+	
 	public void salvar(Empresa empresa) {
 		dao.save(empresa);
 	}
