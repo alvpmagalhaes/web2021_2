@@ -17,6 +17,10 @@ public class VagaService implements IVagaService {
 	@Autowired
 	IVagaDAO dao;
 	
+	public Vaga salvarRest(Vaga vaga) {
+		return dao.saveAndFlush(vaga);
+	}
+	
 	public void salvar(Vaga vaga) {
 		dao.save(vaga);
 	}

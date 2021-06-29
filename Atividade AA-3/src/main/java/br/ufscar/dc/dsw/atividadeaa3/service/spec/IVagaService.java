@@ -6,6 +6,9 @@ import br.ufscar.dc.dsw.atividadeaa3.domain.Vaga;
 import java.util.List;
 
 public interface IVagaService {
+	
+	public Vaga salvarRest(Vaga vaga);
+
 
 	Vaga buscarPorId(Long id);
 

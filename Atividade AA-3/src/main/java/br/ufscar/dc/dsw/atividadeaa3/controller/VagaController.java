@@ -19,7 +19,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Controller
+import java.net.URI;
+
+
+@RestController
 @RequestMapping("/vagas")
 public class VagaController {
 	
@@ -41,6 +44,31 @@ public class VagaController {
 			return null;
 		}
 	}
+	
+	
+	/**
+	 * API REST Vagas de estágio/emprego
+	 */
+
+
+	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> salvarRest(@Valid @RequestBody Vaga vaga) {
+		if (vaga.getRole() == null) {
+			vaga.setRole(ROLE_VAGA.toString());
+		}
+		return ResponseEntity.created(URI.create("/vaga/"+VagaService.salvarRest(vaga).getId())).build();
+	}
+
+
+	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Vaga>> listar() {
+		return ResponseEntity.ok(VagaService.buscarTodos());
+	}
+
+	/**
+	 * Sistema Vagas de estágio/emprego
+	 */
+
 	
 	@GetMapping("/cadastrar")
 	public String cadastrar(Vaga vaga, ModelMap model) {
