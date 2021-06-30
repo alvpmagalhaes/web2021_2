@@ -37,29 +37,57 @@ public class EmpresaController {
 	 */
 	
 	
-	//salvar em rest
+	//salvar 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> salvarRest(@Valid @RequestBody Empresa empresa) {
-		if (empresa.getRole() == null) {
-			empresa.setRole(ROLE_EMPRESA.toString());
-		}
-		return ResponseEntity.created(URI.create("/empresa/"+empresaService.salvarRest(empresa).getId())).build();
-	}
+	public ResponseEntity<String> criar(@Valid @RequestBody Empresa empresa, BCryptPasswordEncoder encoder) {
+		empresa.setPassword(encoder.encode(empresa.getPassword()));
 	
 	
-	//excluir em rest
-	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> excluirRest(@PathVariable("id") Long id){ //VERIFICAR!!!!!!!!!!!!!!!!!
-		return ResponseEntity.delete(URI.create("/empresa/"+loginService.excluirRest(id).getId())).build();
-		//CONFIRMAR!!! N tenho ctz
-	}
-	
-	
-	//listar em rest
+	//listar 
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Empresa>> listar() {
 		return ResponseEntity.ok(empresaService.buscarTodos());
 	}
+	
+	//buscar
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Empresa> buscar(@PathVariable("id") Long id) {
+		Empresa empresa = empresaService.buscarPorId(id);
+		if (empresa == null){
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(empresa);
+	}
+
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Empresa> atualizar(@Valid @RequestBody Empresa empresa, @PathVariable("id") Long id, BCryptPasswordEncoder encoder) {
+		Empresa empresaOriginal = empresaService.buscarPorId(id);
+
+		if(empresaOriginal == null){
+			return ResponseEntity.notFound().build();
+		}
+
+		empresaOriginal.setPassword(encoder.encode(empresa.getPassword()));
+		empresaOriginal.setCnpj(empresa.getCnpj());
+		empresaOriginal.setNome(profissional.getNome());
+		empresaOriginal.setDescricao(empresa.getDescricao());
+		empresaOriginal.setCidade(empresa.getCidade());
+		empresa.setUsername(empresa.getUsername());
+
+		return ResponseEntity.ok(empresaService.salvarRest(empresa));
+	}
+
+	//remover
+	@DeleteMapping("/{id}")
+	public ResponseEntity excluir(@PathVariable("id") Long id) {
+		Empresa empresa = empresaService.buscarPorId(id);
+		if (empresa == null){
+			return ResponseEntity.notFound().build();
+		}
+		loginService.excluir(id);
+		return ResponseEntity.noContent().build();
+	}
+
 	
 	/**
 	 * Sistema Vagas de estágio/emprego
