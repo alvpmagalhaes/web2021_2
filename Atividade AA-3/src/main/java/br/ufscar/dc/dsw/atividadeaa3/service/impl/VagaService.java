@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -52,8 +53,9 @@ public class VagaService implements IVagaService {
 	public List<Vaga> buscarAllPorId(Long id) {
 		return dao.getAllById(id);
 	}
+
 	@Override
-	public List<Vaga> buscarAllPorIdeData(Long id) {
-		return dao.getAllByIdandDate(id);
+	public List<Vaga> buscarPorEmpresaIdEDataLimite(Long id) {
+		return dao.getAllByEmpresaIdAndDataLimite(id,new Date());
 	}
 }
