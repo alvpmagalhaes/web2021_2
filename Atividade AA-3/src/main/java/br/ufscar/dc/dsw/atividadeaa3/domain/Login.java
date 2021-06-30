@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,9 +13,11 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Login extends AbstractEntity<Long> {
 
+    @NotBlank
     @Column(nullable = false, length = 45)
     private String username;
 
+    @NotBlank
     @Column(nullable = false, length = 64)
     private String password;
 
