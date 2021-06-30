@@ -52,13 +52,6 @@ public class VagaController {
 	 * API REST Vagas de estágio/emprego
 	 */
 
-
-	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> salvarRest(@Valid @RequestBody Vaga vaga) {
-		return ResponseEntity.created(URI.create("/vaga/"+vagaService.salvarRest(vaga).getId())).build();
-	}
-
-
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Vaga>> listar() {
 		return ResponseEntity.ok(vagaService.buscarTodos());
