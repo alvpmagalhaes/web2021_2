@@ -41,7 +41,8 @@ public class EmpresaController {
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> criar(@Valid @RequestBody Empresa empresa, BCryptPasswordEncoder encoder) {
 		empresa.setPassword(encoder.encode(empresa.getPassword()));
-	
+		return ResponseEntity.created(URI.create("/empresas/"+empresaService.salvarRest(empresa).getId())).build();
+	}
 	
 	//listar 
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
