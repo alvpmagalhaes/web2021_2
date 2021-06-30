@@ -6,11 +6,11 @@ import br.ufscar.dc.dsw.atividadeaa3.domain.Empresa;
 
 public interface IEmpresaService {
 	
-	public Empresa salvarRest(Empresa empresa);
-	
-	public Empresa excluirRest(Long id);
+	Empresa salvarRest(Empresa empresa);
 
 	Empresa buscarPorId(Long id);
+	
+	Empresa buscarPorNome(String nome);
 
 	List<Empresa> buscarTodos();
 
