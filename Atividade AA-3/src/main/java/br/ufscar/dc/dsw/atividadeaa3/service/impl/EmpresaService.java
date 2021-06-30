@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.atividadeaa3.service.impl;
 
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,9 +36,9 @@ public class EmpresaService implements IEmpresaService {
 		dao.deleteById(id);
 	}
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public Empresa buscarPorId(Long id) {
-		return dao.getById(id.longValue());
+		return dao.findById(id.longValue()).orElse(null);
 	}
 
 	@Transactional(readOnly = true)
