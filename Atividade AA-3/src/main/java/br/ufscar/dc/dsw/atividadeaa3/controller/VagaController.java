@@ -54,7 +54,11 @@ public class VagaController {
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Vaga>> listar() {
-		return ResponseEntity.ok(vagaService.buscarTodos());
+		List<Vaga> lista = vagaService.buscarTodos();
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
 	}
 
 
@@ -75,6 +79,10 @@ public class VagaController {
 		}
 
 		List<Vaga> vagas = vagaService.buscarPorEmpresaIdEDataLimite(id);
+
+		if (vagas.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
 
 		return ResponseEntity.ok(vagas);
 	}

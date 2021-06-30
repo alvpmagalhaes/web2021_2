@@ -3,6 +3,7 @@ package br.ufscar.dc.dsw.atividadeaa3.controller;
 import javax.validation.Valid;
 import javax.xml.stream.events.EntityDeclaration;
 
+import br.ufscar.dc.dsw.atividadeaa3.domain.Profissional;
 import br.ufscar.dc.dsw.atividadeaa3.service.spec.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -39,10 +40,10 @@ public class EmpresaController {
 	
 	//salvar 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> criar(@Valid @RequestBody Empresa empresa, BCryptPasswordEncoder encoder) {
+	public ResponseEntity<Empresa> criar(@Valid @RequestBody Empresa empresa, BCryptPasswordEncoder encoder) {
 		try {
 			empresa.setPassword(encoder.encode(empresa.getPassword()));
-			return ResponseEntity.created(URI.create("/empresas/" + empresaService.salvarRest(empresa).getId())).build();
+			return ResponseEntity.ok(empresaService.salvarRest(empresa));
 		}catch (Exception e){
 			return ResponseEntity.unprocessableEntity().build();
 		}
@@ -51,7 +52,11 @@ public class EmpresaController {
 	//listar 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Empresa>> listar() {
-		return ResponseEntity.ok(empresaService.buscarTodos());
+		List<Empresa> lista = empresaService.buscarTodos();
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
 	}
 	
 	//buscar

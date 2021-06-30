@@ -37,10 +37,10 @@ public class ProfissionalController {
 
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> criar(@Valid @RequestBody Profissional profissional, BCryptPasswordEncoder encoder) {
+	public ResponseEntity<Profissional> criar(@Valid @RequestBody Profissional profissional, BCryptPasswordEncoder encoder) {
 		try {
 			profissional.setPassword(encoder.encode(profissional.getPassword()));
-			return ResponseEntity.created(URI.create("/profissionais/" + profissionalService.salvarRest(profissional).getId())).build();
+			return ResponseEntity.ok(profissionalService.salvarRest(profissional));
 		}catch (Exception e){
 			return ResponseEntity.unprocessableEntity().build();
 		}
@@ -48,7 +48,12 @@ public class ProfissionalController {
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Profissional>> listar() {
-		return ResponseEntity.ok(profissionalService.buscarTodos());
+
+		List<Profissional> lista = profissionalService.buscarTodos();
+		if (lista.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(lista);
 	}
 
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
