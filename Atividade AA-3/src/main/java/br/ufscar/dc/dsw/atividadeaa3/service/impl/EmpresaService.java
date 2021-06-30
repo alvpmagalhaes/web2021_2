@@ -20,7 +20,7 @@ public class EmpresaService implements IEmpresaService {
 	@Autowired
 	IEmpresaDAO dao;
 	
-	Empresa salvarRest(Empresa empresa) {
+	public Empresa salvarRest(Empresa empresa) {
 		if (empresa.getRole() == null) {
 			empresa.setRole(ROLE_EMPRESA.toString());
 		}
@@ -39,6 +39,11 @@ public class EmpresaService implements IEmpresaService {
 	@Transactional
 	public Empresa buscarPorId(Long id) {
 		return dao.findById(id.longValue()).orElse(null);
+	}
+
+	@Override
+	public Empresa buscarPorNome(String nome) {
+		return null;
 	}
 
 	@Transactional(readOnly = true)

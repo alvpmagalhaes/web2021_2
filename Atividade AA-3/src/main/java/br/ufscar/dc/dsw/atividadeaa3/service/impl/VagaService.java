@@ -30,7 +30,7 @@ public class VagaService implements IVagaService {
 	}
 
 	public Vaga buscarPorId(Long id) {
-		return dao.findById(id.longValue()).orElse(null);;
+		return dao.findById(id.longValue()).orElse(null);
 	}
 
 	@Transactional(readOnly = true)
@@ -51,5 +51,9 @@ public class VagaService implements IVagaService {
 	@Override
 	public List<Vaga> buscarAllPorId(Long id) {
 		return dao.getAllById(id);
+	}
+	@Override
+	public List<Vaga> buscarAllPorIdeData(Long id) {
+		return dao.getAllByIdandDate(id);
 	}
 }
