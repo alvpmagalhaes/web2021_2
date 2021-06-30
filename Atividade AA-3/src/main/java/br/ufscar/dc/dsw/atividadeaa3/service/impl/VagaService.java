@@ -52,4 +52,8 @@ public class VagaService implements IVagaService {
 	public List<Vaga> buscarAllPorId(Long id) {
 		return dao.getAllById(id);
 	}
+	@Override
+	public List<Vaga> buscarAllPorIdeData(Long id) {
+		return dao.getAllByIdandDate(id);
+	}
 }
