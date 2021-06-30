@@ -67,12 +67,12 @@ public class EmpresaController {
 			return ResponseEntity.notFound().build();
 		}
 
-		String password = profissional.getPassword();
+		String password = empresa.getPassword();
 
 		try{
-			encoder.upgradeEncoding(profissional.getPassword());
+			encoder.upgradeEncoding(empresa.getPassword());
 		}catch (Exception e){
-			password = encoder.encode(profissional.getPassword());
+			password = encoder.encode(empresa.getPassword());
 		}
 
 		empresaOriginal.setPassword(password);
@@ -152,7 +152,7 @@ public class EmpresaController {
 			password = encoder.encode(empresa.getPassword());
 		}
 
-		profissional.setPassword(password);
+		empresa.setPassword(password);
 
 
 		empresaService.salvar(empresa);
