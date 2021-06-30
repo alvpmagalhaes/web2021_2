@@ -30,7 +30,7 @@ public class VagaService implements IVagaService {
 	}
 
 	public Vaga buscarPorId(Long id) {
-		return dao.getById(id.longValue());
+		return dao.findById(id.longValue()).orElse(null);
 	}
 
 	@Transactional(readOnly = true)
