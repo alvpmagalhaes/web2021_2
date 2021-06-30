@@ -1,13 +1,13 @@
 package br.ufscar.dc.dsw.atividadeaa3.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@Data
 @Builder
 @Entity
 @Table(name = "Empresa")

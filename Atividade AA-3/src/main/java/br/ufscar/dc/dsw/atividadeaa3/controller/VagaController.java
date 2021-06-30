@@ -24,7 +24,7 @@ import java.util.Set;
 import java.net.URI;
 
 
-@RestController
+@Controller
 @RequestMapping("/vagas")
 public class VagaController {
 	
@@ -52,18 +52,12 @@ public class VagaController {
 	 * API REST Vagas de estágio/emprego
 	 */
 
-
-	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> salvarRest(@Valid @RequestBody Vaga vaga) {
-		return ResponseEntity.created(URI.create("/vaga/"+vagaService.salvarRest(vaga).getId())).build();
-	}
-
-
-	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Vaga>> listar() {
 		return ResponseEntity.ok(vagaService.buscarTodos());
 	}
-	
+
+
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Vaga> buscar(@PathVariable("id") Long id) {
 		Vaga vaga = vagaService.buscarPorId(id);
@@ -72,15 +66,20 @@ public class VagaController {
 		}
 		return ResponseEntity.ok(vaga);
 	}
-	
+
 	@GetMapping(value = "/empresas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Vaga> buscar(@PathVariable("id") Long id) {
-		Vaga vaga = vagaService.buscarPorIdeData(id);
-		if (vaga == null){
+	public ResponseEntity<List<Vaga>> buscarEmAberto(@PathVariable("id") Long id) {
+		Empresa empresa = empresaService.buscarPorId(id);
+		if (empresa == null){
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(vaga);
+
+		List<Vaga> vagas = vagaService.buscarPorEmpresaIdEDataLimite(id);
+
+		return ResponseEntity.ok(vagas);
 	}
+
+
 
 	/**
 	 * Sistema Vagas de estágio/emprego

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -18,7 +19,8 @@ public interface IVagaDAO extends JpaRepository<Vaga, Long> {
 
     @Query("select v from Vaga v where v.id = :id ")
     List<Vaga> getAllById(@PathVariable("id") Long id);
-    
-    @Query("select v from Vaga v where v.id = :id and WHERE a.dataLimite >= cast(cast(getdate() as date) as datetime)")
-    List<Vaga> getAllByIdandDate(@PathVariable("id") Long id, Date dataLimite);
+
+    @Query("select v from Vaga v where v.empresa.id = :idEmpresa and v.dataLimite >= :dataAtual")
+    List<Vaga> getAllByEmpresaIdAndDataLimite(@PathVariable("idEmpresa") Long id, @PathVariable("dataAtual") Date dataLimite);
+
 }
