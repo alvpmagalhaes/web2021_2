@@ -1,6 +1,6 @@
 ## Sobre
 
-Projeto 2 
+Projeto 3 
 
 ## Equipe
 #####***Alvaro Magalhães***
