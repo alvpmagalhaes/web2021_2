@@ -36,6 +36,12 @@ public class EmpresaService implements IEmpresaService {
 		dao.deleteById(id);
 	}
 
+	@Override
+	@Transactional
+	public Empresa buscarPorCidade(String nomeCidade) {
+		return dao.findAllByCidade(nomeCidade);
+	}
+
 	@Transactional
 	public Empresa buscarPorId(Long id) {
 		return dao.findById(id.longValue()).orElse(null);

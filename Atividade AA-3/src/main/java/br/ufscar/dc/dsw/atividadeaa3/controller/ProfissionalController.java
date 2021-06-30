@@ -38,8 +38,12 @@ public class ProfissionalController {
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> criar(@Valid @RequestBody Profissional profissional, BCryptPasswordEncoder encoder) {
-		profissional.setPassword(encoder.encode(profissional.getPassword()));
-		return ResponseEntity.created(URI.create("/profissionais/"+profissionalService.salvarRest(profissional).getId())).build();
+		try {
+			profissional.setPassword(encoder.encode(profissional.getPassword()));
+			return ResponseEntity.created(URI.create("/profissionais/" + profissionalService.salvarRest(profissional).getId())).build();
+		}catch (Exception e){
+			return ResponseEntity.unprocessableEntity().build();
+		}
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -58,29 +62,33 @@ public class ProfissionalController {
 
 	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Profissional> atualizar(@Valid @RequestBody Profissional profissional, @PathVariable("id") Long id, BCryptPasswordEncoder encoder) {
-		Profissional profissionalOriginal = profissionalService.buscarPorId(id);
+		try {
+			Profissional profissionalOriginal = profissionalService.buscarPorId(id);
 
-		if(profissionalOriginal == null){
-			return ResponseEntity.notFound().build();
-		}
+			if (profissionalOriginal == null) {
+				return ResponseEntity.notFound().build();
+			}
 
-		String password = profissional.getPassword();
+			String password = profissional.getPassword();
 
-		try{
-			encoder.upgradeEncoding(profissional.getPassword());
+			try {
+				encoder.upgradeEncoding(profissional.getPassword());
+			} catch (Exception e) {
+				password = encoder.encode(profissional.getPassword());
+			}
+
+			profissionalOriginal.setPassword(password);
+			profissionalOriginal.setCpf(profissional.getCpf());
+			profissionalOriginal.setDataDeNascimento(profissional.getDataDeNascimento());
+			profissionalOriginal.setNome(profissional.getNome());
+			profissionalOriginal.setSexo(profissional.getSexo());
+			profissionalOriginal.setTelefone(profissional.getTelefone());
+			profissionalOriginal.setUsername(profissional.getUsername());
+
+			return ResponseEntity.ok(profissionalService.salvarRest(profissionalOriginal));
 		}catch (Exception e){
-			password = encoder.encode(profissional.getPassword());
+			return ResponseEntity.unprocessableEntity().build();
 		}
-
-		profissionalOriginal.setPassword(password);
-		profissionalOriginal.setCpf(profissional.getCpf());
-		profissionalOriginal.setDataDeNascimento(profissional.getDataDeNascimento());
-		profissionalOriginal.setNome(profissional.getNome());
-		profissionalOriginal.setSexo(profissional.getSexo());
-		profissionalOriginal.setTelefone(profissional.getTelefone());
-		profissionalOriginal.setUsername(profissional.getUsername());
-
-		return ResponseEntity.ok(profissionalService.salvarRest(profissionalOriginal));
 	}
 
 	@DeleteMapping("/{id}")

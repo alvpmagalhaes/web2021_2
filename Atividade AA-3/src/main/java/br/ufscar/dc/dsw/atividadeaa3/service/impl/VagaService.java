@@ -56,6 +56,6 @@ public class VagaService implements IVagaService {
 
 	@Override
 	public List<Vaga> buscarPorEmpresaIdEDataLimite(Long id) {
-		return dao.getAllByEmpresaIdAndDataLimite(id,new Date());
+		return dao.searchByEmpresaIdAndDataLimite(id,new Date());
 	}
 }

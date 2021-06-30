@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.atividadeaa3.controller;
 
 import javax.validation.Valid;
+import javax.xml.stream.events.EntityDeclaration;
 
 import br.ufscar.dc.dsw.atividadeaa3.service.spec.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,12 @@ public class EmpresaController {
 	//salvar 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> criar(@Valid @RequestBody Empresa empresa, BCryptPasswordEncoder encoder) {
-		empresa.setPassword(encoder.encode(empresa.getPassword()));
-		return ResponseEntity.created(URI.create("/empresas/"+empresaService.salvarRest(empresa).getId())).build();
+		try {
+			empresa.setPassword(encoder.encode(empresa.getPassword()));
+			return ResponseEntity.created(URI.create("/empresas/" + empresaService.salvarRest(empresa).getId())).build();
+		}catch (Exception e){
+			return ResponseEntity.unprocessableEntity().build();
+		}
 	}
 	
 	//listar 
@@ -59,30 +64,44 @@ public class EmpresaController {
 		return ResponseEntity.ok(empresa);
 	}
 
-	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Empresa> atualizar(@Valid @RequestBody Empresa empresa, @PathVariable("id") Long id, BCryptPasswordEncoder encoder) {
-		Empresa empresaOriginal = empresaService.buscarPorId(id);
-
-		if(empresaOriginal == null){
+	//buscar
+	@GetMapping(value = "/cidades/{nomeCidade}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Empresa> buscar(@PathVariable("nomeCidade") String nomeCidade) {
+		Empresa empresa = empresaService.buscarPorCidade(nomeCidade);
+		if (empresa == null){
 			return ResponseEntity.notFound().build();
 		}
+		return ResponseEntity.ok(empresa);
+	}
 
-		String password = empresa.getPassword();
+	@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Empresa> atualizar(@Valid @RequestBody Empresa empresa, @PathVariable("id") Long id, BCryptPasswordEncoder encoder) {
+		try {
+			Empresa empresaOriginal = empresaService.buscarPorId(id);
 
-		try{
-			encoder.upgradeEncoding(empresa.getPassword());
+			if (empresaOriginal == null) {
+				return ResponseEntity.notFound().build();
+			}
+
+			String password = empresa.getPassword();
+
+			try {
+				encoder.upgradeEncoding(empresa.getPassword());
+			} catch (Exception e) {
+				password = encoder.encode(empresa.getPassword());
+			}
+
+			empresaOriginal.setPassword(password);
+			empresaOriginal.setCnpj(empresa.getCnpj());
+			empresaOriginal.setNome(empresa.getNome());
+			empresaOriginal.setDescricao(empresa.getDescricao());
+			empresaOriginal.setCidade(empresa.getCidade());
+			empresaOriginal.setUsername(empresa.getUsername());
+
+			return ResponseEntity.ok(empresaService.salvarRest(empresaOriginal));
 		}catch (Exception e){
-			password = encoder.encode(empresa.getPassword());
+			return ResponseEntity.unprocessableEntity().build();
 		}
-
-		empresaOriginal.setPassword(password);
-		empresaOriginal.setCnpj(empresa.getCnpj());
-		empresaOriginal.setNome(empresa.getNome());
-		empresaOriginal.setDescricao(empresa.getDescricao());
-		empresaOriginal.setCidade(empresa.getCidade());
-		empresaOriginal.setUsername(empresa.getUsername());
-
-		return ResponseEntity.ok(empresaService.salvarRest(empresaOriginal));
 	}
 
 	//remover

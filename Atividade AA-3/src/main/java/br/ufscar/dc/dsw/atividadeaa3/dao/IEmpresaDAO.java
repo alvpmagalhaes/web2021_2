@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface IEmpresaDAO extends JpaRepository<Empresa, Long> {
 
 	Empresa findByCnpj(String cnpj);
+
+    Empresa findAllByCidade(String nomeCidade);
 }

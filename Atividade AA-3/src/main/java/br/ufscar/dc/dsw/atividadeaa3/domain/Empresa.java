@@ -1,14 +1,16 @@
 package br.ufscar.dc.dsw.atividadeaa3.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 
 @Data
-@Builder
 @Entity
 @Table(name = "Empresa")
 public class Empresa extends Login {
@@ -31,6 +33,10 @@ public class Empresa extends Login {
 	@Size(min = 3, max = 60)
 	@Column(nullable = false, unique = false, length = 60)
 	private String cidade;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "empresa", cascade = { CascadeType.REMOVE }, orphanRemoval = true)
+	private Collection<Vaga> vagas;
 
 
 	public String getCnpj() {
@@ -63,6 +69,14 @@ public class Empresa extends Login {
 
 	public Empresa(Login login) {
 		setId(login.getId());
+	}
+
+	public Collection<Vaga> getVagas() {
+		return vagas;
+	}
+
+	public void setVagas(Collection<Vaga> vagas) {
+		this.vagas = vagas;
 	}
 
 	public Empresa() {
