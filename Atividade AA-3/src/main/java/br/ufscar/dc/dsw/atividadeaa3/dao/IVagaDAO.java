@@ -19,7 +19,7 @@ public interface IVagaDAO extends JpaRepository<Vaga, Long> {
 
     @Query("select v from Vaga v where v.id = :id ")
     List<Vaga> getAllById(@PathVariable("id") Long id);
-    
+
     @Query("select v from Vaga v where v.empresa.id = :idEmpresa and v.dataLimite >= :dataAtual")
     List<Vaga> getAllByEmpresaIdAndDataLimite(@PathVariable("idEmpresa") Long id, @PathVariable("dataAtual") Date dataLimite);
 

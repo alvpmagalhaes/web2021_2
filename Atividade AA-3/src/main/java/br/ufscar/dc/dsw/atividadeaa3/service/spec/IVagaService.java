@@ -19,7 +19,6 @@ public interface IVagaService {
 	List<Vaga> buscarTodos();
 
 	List<Vaga> buscarPorEmpresa(Empresa empresa);
-	
 
 	List<Vaga> buscarPorEmpresaIdEDataLimite(Long id);
 
