@@ -38,14 +38,14 @@ public class EmpresaController {
 	
 	
 	//salvar 
-	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> criar(@Valid @RequestBody Empresa empresa, BCryptPasswordEncoder encoder) {
 		empresa.setPassword(encoder.encode(empresa.getPassword()));
 		return ResponseEntity.created(URI.create("/empresas/"+empresaService.salvarRest(empresa).getId())).build();
 	}
 	
 	//listar 
-	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Empresa>> listar() {
 		return ResponseEntity.ok(empresaService.buscarTodos());
 	}
@@ -68,14 +68,22 @@ public class EmpresaController {
 			return ResponseEntity.notFound().build();
 		}
 
-		empresaOriginal.setPassword(encoder.encode(empresa.getPassword()));
+		String password = profissional.getPassword();
+
+		try{
+			encoder.upgradeEncoding(profissional.getPassword());
+		}catch (Exception e){
+			password = encoder.encode(profissional.getPassword());
+		}
+
+		empresaOriginal.setPassword(password);
 		empresaOriginal.setCnpj(empresa.getCnpj());
 		empresaOriginal.setNome(profissional.getNome());
 		empresaOriginal.setDescricao(empresa.getDescricao());
 		empresaOriginal.setCidade(empresa.getCidade());
-		empresa.setUsername(empresa.getUsername());
+		empresaOriginal.setUsername(empresa.getUsername());
 
-		return ResponseEntity.ok(empresaService.salvarRest(empresa));
+		return ResponseEntity.ok(empresaService.salvarRest(empresaOriginal));
 	}
 
 	//remover
@@ -128,7 +136,7 @@ public class EmpresaController {
 	}
 
 	@PostMapping("/editar")
-	public String editar(@Valid Empresa empresa, BindingResult result, RedirectAttributes attr) {
+	public String editar(@Valid Empresa empresa, BindingResult result, RedirectAttributes attr, BCryptPasswordEncoder encoder) {
 		if (empresa.getRole() == null) {
 			empresa.setRole(ROLE_EMPRESA.toString());
 		}
@@ -136,6 +144,17 @@ public class EmpresaController {
 		if (result.hasErrors()) {
 			return "empresa/cadastro";
 		}
+		
+		String password = empresa.getPassword();
+
+		try{
+			encoder.upgradeEncoding(empresa.getPassword());
+		}catch (Exception e){
+			password = encoder.encode(empresa.getPassword());
+		}
+
+		profissional.setPassword(password);
+
 
 		empresaService.salvar(empresa);
 		attr.addFlashAttribute("sucess", "Empresa editada com sucesso.");
