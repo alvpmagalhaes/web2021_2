@@ -66,23 +66,17 @@ public class VagaController {
 		}
 		return ResponseEntity.ok(vaga);
 	}
-	
-	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Vaga> buscar(@PathVariable("id") Long id) {
-		Vaga vaga = vagaService.buscarPorId(id);
-		if (vaga == null){
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok(vaga);
-	}
-	
+
 	@GetMapping(value = "/empresas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Vaga> buscar(@PathVariable("id") Long id) {
-		Vaga vaga = vagaService.buscarPorIdeData(id);
-		if (vaga == null){
+	public ResponseEntity<List<Vaga>> buscarEmAberto(@PathVariable("id") Long id) {
+		Empresa empresa = empresaService.buscarPorId(id);
+		if (empresa == null){
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(vaga);
+
+		List<Vaga> vagas = vagaService.buscarPorEmpresaIdEDataLimite(id);
+
+		return ResponseEntity.ok(vagas);
 	}
 
 
