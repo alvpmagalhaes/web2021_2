@@ -1,12 +1,10 @@
 package br.ufscar.dc.dsw.atividadeaa3.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
