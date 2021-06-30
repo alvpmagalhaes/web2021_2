@@ -7,7 +7,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-
+@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "Vaga")
 public class Vaga extends AbstractEntity<Long>  {

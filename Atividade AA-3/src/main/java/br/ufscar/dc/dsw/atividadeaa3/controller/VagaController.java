@@ -56,14 +56,25 @@ public class VagaController {
 		if (vaga.getRole() == null) {
 			vaga.setRole(ROLE_VAGA.toString());
 		}
-		return ResponseEntity.created(URI.create("/vaga/"+VagaService.salvarRest(vaga).getId())).build();
+		return ResponseEntity.created(URI.create("/vaga/"+vagaService.salvarRest(vaga).getId())).build();
 	}
 
 
 	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Vaga>> listar() {
-		return ResponseEntity.ok(VagaService.buscarTodos());
+		return ResponseEntity.ok(vagaService.buscarTodos());
 	}
+	
+	
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Vaga> buscar(@PathVariable("id") Long id) {
+		Vaga vaga = vagaService.buscarPorId(id);
+		if (vaga == null){
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(vaga);
+	}
+
 
 	/**
 	 * Sistema Vagas de estágio/emprego
