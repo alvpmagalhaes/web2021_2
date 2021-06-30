@@ -24,7 +24,7 @@ import java.util.Set;
 import java.net.URI;
 
 
-@RestController
+@Controller
 @RequestMapping("/vagas")
 public class VagaController {
 	
@@ -52,7 +52,7 @@ public class VagaController {
 	 * API REST Vagas de estágio/emprego
 	 */
 
-	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Vaga>> listar() {
 		return ResponseEntity.ok(vagaService.buscarTodos());
 	}

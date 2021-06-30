@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.atividadeaa3.util;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +18,10 @@ public abstract class DataUtil {
     public static String convertDateToString(Date data) throws ParseException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMATO_DATA);
         return data.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().format(formatter);
+    }
+
+    public static Date converteLocalDateToDate(LocalDate localDate){
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
 }

@@ -1,6 +1,7 @@
 package br.ufscar.dc.dsw.atividadeaa3.domain;
 
 import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
