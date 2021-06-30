@@ -8,6 +8,10 @@ import br.ufscar.dc.dsw.atividadeaa3.dao.IEmpresaDAO;
 import br.ufscar.dc.dsw.atividadeaa3.domain.Empresa;
 import br.ufscar.dc.dsw.atividadeaa3.service.spec.IEmpresaService;
 
+
+import static br.ufscar.dc.dsw.atividadeaa3.domain.TipoPermissao.ROLE_EMPRESA;
+
+
 @Service
 @Transactional(readOnly = false)
 public class EmpresaService implements IEmpresaService {
@@ -15,14 +19,12 @@ public class EmpresaService implements IEmpresaService {
 	@Autowired
 	IEmpresaDAO dao;
 	
-	public Empresa salvarRest(Empresa empresa) {
+	Empresa salvarRest(Empresa empresa) {
+		if (empresa.getRole() == null) {
+			empresa.setRole(ROLE_EMPRESA.toString());
+		}
+		
 		return dao.saveAndFlush(empresa);
-	}
-	
-
-	//deletar empresas por id por rest
-	public Empresa excluirRest(Long id) {
-		return dao.deleteByIdAndFlush(id);
 	}
 	
 	public void salvar(Empresa empresa) {

@@ -6,6 +6,7 @@ import br.ufscar.dc.dsw.atividadeaa3.service.spec.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ import java.util.List;
 
 import static br.ufscar.dc.dsw.atividadeaa3.domain.TipoPermissao.ROLE_PROFISSIONAL;
 
-@RestController
+@Controller
 @RequestMapping("/profissionais")
 public class ProfissionalController {
 
@@ -35,13 +36,13 @@ public class ProfissionalController {
 	 */
 
 
-	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> criar(@Valid @RequestBody Profissional profissional, BCryptPasswordEncoder encoder) {
 		profissional.setPassword(encoder.encode(profissional.getPassword()));
 		return ResponseEntity.created(URI.create("/profissionais/"+profissionalService.salvarRest(profissional).getId())).build();
 	}
 
-	@GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Profissional>> listar() {
 		return ResponseEntity.ok(profissionalService.buscarTodos());
 	}
@@ -63,15 +64,23 @@ public class ProfissionalController {
 			return ResponseEntity.notFound().build();
 		}
 
-		profissionalOriginal.setPassword(encoder.encode(profissional.getPassword()));
+		String password = profissional.getPassword();
+
+		try{
+			encoder.upgradeEncoding(profissional.getPassword());
+		}catch (Exception e){
+			password = encoder.encode(profissional.getPassword());
+		}
+
+		profissionalOriginal.setPassword(password);
 		profissionalOriginal.setCpf(profissional.getCpf());
 		profissionalOriginal.setDataDeNascimento(profissional.getDataDeNascimento());
 		profissionalOriginal.setNome(profissional.getNome());
 		profissionalOriginal.setSexo(profissional.getSexo());
 		profissionalOriginal.setTelefone(profissional.getTelefone());
-		profissional.setUsername(profissional.getUsername());
+		profissionalOriginal.setUsername(profissional.getUsername());
 
-		return ResponseEntity.ok(profissionalService.salvarRest(profissional));
+		return ResponseEntity.ok(profissionalService.salvarRest(profissionalOriginal));
 	}
 
 	@DeleteMapping("/{id}")
@@ -109,6 +118,8 @@ public class ProfissionalController {
 			return "profissional/cadastro";
 		}
 
+		profissional.setPassword(encoder.encode(profissional.getPassword()));
+
 		profissionalService.salvar(profissional);
 		attr.addFlashAttribute("success", "Profissional inserido com sucesso");
 		return "redirect:/profissionais/listar";
@@ -121,7 +132,7 @@ public class ProfissionalController {
 	}
 
 	@PostMapping("/editar")
-	public String editar(@Valid Profissional profissional, BindingResult result, RedirectAttributes attr) {
+	public String editar(@Valid Profissional profissional, BindingResult result, RedirectAttributes attr, BCryptPasswordEncoder encoder) {
 		if (profissional.getRole() == null) {
 			profissional.setRole(ROLE_PROFISSIONAL.toString());
 		}
@@ -129,6 +140,16 @@ public class ProfissionalController {
 		if (result.hasErrors()) {
 			return "profissional/cadastro";
 		}
+
+		String password = profissional.getPassword();
+
+		try{
+			encoder.upgradeEncoding(profissional.getPassword());
+		}catch (Exception e){
+			password = encoder.encode(profissional.getPassword());
+		}
+
+		profissional.setPassword(password);
 
 		profissionalService.salvar(profissional);
 		attr.addFlashAttribute("success", "Profissional editadp com sucesso.");

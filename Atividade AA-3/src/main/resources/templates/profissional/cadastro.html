@@ -98,7 +98,7 @@
 
 					<div class="form-group col-md-6">
 						<label for="dataDeNascimento" th:text="#{profissional.data.label}">Data de Nascimento</label> 
-						<input type="date" class="form-control" id="dataDeNascimento" placeholder="dd/mm/yyyy"
+						<input type="text" class="form-control" id="dataDeNascimento" placeholder="dd/mm/yyyy"
 							autofocus="autofocus" th:field="*{dataDeNascimento}"
 							th:classappend="${#fields.hasErrors('dataDeNascimento')} ? is-invalid"
 							data-mask="00/00/0000" data-mask-reverse="true" />

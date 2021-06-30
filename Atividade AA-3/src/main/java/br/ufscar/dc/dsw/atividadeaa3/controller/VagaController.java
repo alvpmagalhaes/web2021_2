@@ -6,6 +6,8 @@ import br.ufscar.dc.dsw.atividadeaa3.service.spec.IEmpresaService;
 import br.ufscar.dc.dsw.atividadeaa3.service.spec.ILoginService;
 import br.ufscar.dc.dsw.atividadeaa3.service.spec.IVagaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -53,9 +55,6 @@ public class VagaController {
 
 	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> salvarRest(@Valid @RequestBody Vaga vaga) {
-		if (vaga.getRole() == null) {
-			vaga.setRole(ROLE_VAGA.toString());
-		}
 		return ResponseEntity.created(URI.create("/vaga/"+vagaService.salvarRest(vaga).getId())).build();
 	}
 
@@ -64,8 +63,8 @@ public class VagaController {
 	public ResponseEntity<List<Vaga>> listar() {
 		return ResponseEntity.ok(vagaService.buscarTodos());
 	}
-	
-	
+
+
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Vaga> buscar(@PathVariable("id") Long id) {
 		Vaga vaga = vagaService.buscarPorId(id);

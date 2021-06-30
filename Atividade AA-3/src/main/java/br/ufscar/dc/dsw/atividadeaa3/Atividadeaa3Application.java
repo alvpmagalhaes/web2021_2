@@ -13,10 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Date;
 
 @SpringBootApplication
-public class Atividadeaa2Application {
+public class Atividadeaa3Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Atividadeaa2Application.class, args);
+		SpringApplication.run(Atividadeaa3Application.class, args);
 	}
 
 	@Bean
