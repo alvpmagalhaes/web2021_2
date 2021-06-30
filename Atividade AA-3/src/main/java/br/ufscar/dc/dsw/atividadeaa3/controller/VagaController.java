@@ -70,7 +70,16 @@ public class VagaController {
 		if (vaga == null){
 			return ResponseEntity.notFound().build();
 		}
-		return ResponseEntity.ok(profissional);
+		return ResponseEntity.ok(vaga);
+	}
+	
+	@GetMapping(value = "/empresas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Vaga> buscar(@PathVariable("id") Long id) {
+		Vaga vaga = vagaService.buscarPorIdeData(id);
+		if (vaga == null){
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(vaga);
 	}
 
 	/**

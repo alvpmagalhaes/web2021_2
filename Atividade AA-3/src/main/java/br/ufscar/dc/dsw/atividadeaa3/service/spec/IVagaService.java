@@ -19,6 +19,8 @@ public interface IVagaService {
 	List<Vaga> buscarTodos();
 
 	List<Vaga> buscarPorEmpresa(Empresa empresa);
+	
+	List<Vaga> buscarAllPorIdeData(Long id);
 
 	void salvar(Vaga vaga);
 
