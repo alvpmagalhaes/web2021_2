@@ -1,17 +1,15 @@
 package br.ufscar.dc.dsw.atividadeaa3.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-@Data
 @Getter
 @Setter
 @Entity
@@ -41,7 +39,9 @@ public class Profissional extends Login {
 
 	@NotNull
 	@Column(nullable = false, unique = false, length = 60)
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", locale = "pt-BR", timezone = "Brazil/East")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dataDeNascimento;
 
 	public Profissional(Login login) {
