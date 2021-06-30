@@ -63,6 +63,15 @@ public class VagaController {
 	public ResponseEntity<List<Vaga>> listar() {
 		return ResponseEntity.ok(vagaService.buscarTodos());
 	}
+	
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Vaga> buscar(@PathVariable("id") Long id) {
+		Vaga vaga = vagaService.buscarPorId(id);
+		if (vaga == null){
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(profissional);
+	}
 
 	/**
 	 * Sistema Vagas de estágio/emprego
